@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import Math from 'math-expression-evaluator';
+import VariableViewer from './VariableViewer';
 
 const MainContainer = () => {
     const [formulas, setFormulas] = React.useState([]);
@@ -17,11 +18,12 @@ const MainContainer = () => {
     const evaluate = (input) => {
         console.log(vars);
 
-        if (input.includes('=')) {
+        if (input.includes('=') && input.indexOf('=') === 1) {
             const [key, value] = input.split('=');
-            vars[key] = replaceVars(value);
+            vars[key] = evaluate(replaceVars(value));
+
             setVars(vars);
-            return evaluate(value);
+            return vars[key];
         }
 
         input = replaceVars(input);
@@ -76,17 +78,20 @@ const MainContainer = () => {
     };
 
     return (
-        <main className="bg-blue-400 bg-opacity-50 h-minus-header mx-40 flex flex-col">
-            <div
-                id="previousArea"
-                className="bg-gray-200 w-[1000px] h-[1000px] mx-auto px-4 py-4"
-            >
-                {formulas.map((formula, i) => (
-                    <div key={i} className="block">
-                        <div>{formula.input}</div>
-                        <div className="text-right">{formula.output}</div>
-                    </div>
-                ))}
+        <main className="bg-blue-400 bg-opacity-50 h-minus-header flex flex-col">
+            <div id="mainContainer">
+                <VariableViewer vars={vars} />
+                <div
+                    id="previousArea"
+                    className="bg-gray-200 container h-[1000px] px-4 py-4"
+                >
+                    {formulas.map((formula, i) => (
+                        <div key={i} className="block">
+                            <div>{formula.input}</div>
+                            <div className="text-right">{formula.output}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
             <div id="inputArea" className="flex">
                 <input
