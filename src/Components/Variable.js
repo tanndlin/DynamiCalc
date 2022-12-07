@@ -16,7 +16,7 @@ const Variable = (props) => {
             />
             <div className="padder"></div>
             <div className="flex">
-                <span className="font-bold">{name}</span>
+                <span className="font-bold h-5">{name + '='}</span>
                 <span className="ml-4">{value}</span>
                 {!isStatic && (
                     <span className="ml-auto">{evaluate(value)}</span>
