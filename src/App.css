@@ -37,6 +37,8 @@
   transition: color 0.3s ease-in-out;
   color:white;
   visibility: hidden;
+  opacity: 0;
+  transition: 300ms;
 }
 
 .close:hover{
@@ -45,6 +47,7 @@
 
 .equation:hover .close{
   visibility: visible;
+  opacity: 1;
 }
 
 .indicator{
@@ -58,4 +61,32 @@
 
 .indicator-false{
   right:0;
+}
+
+.variable{
+  transition: 300ms;
+  max-height: 40px;
+  height:9999px;
+  overflow: hidden;
+}
+
+.variable:hover{
+  @apply bg-sky-900;
+  max-height: 60px;
+}
+
+.variable:hover .close{
+  visibility: visible;
+  opacity: 1;
+}
+
+.variable:hover .padder{
+  max-height: 20px;
+}
+
+.padder{
+  transition: 300ms;
+  height:20px;
+  max-height: 0;
+  width: 100%;
 }

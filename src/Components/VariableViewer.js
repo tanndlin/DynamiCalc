@@ -13,6 +13,7 @@ const VariableViewer = (props) => {
                     value={vars[key]}
                     isStatic={isStatic}
                     evaluate={props.evaluate}
+                    delete={() => props.delete(key)}
                 />
             ))}
         </section>

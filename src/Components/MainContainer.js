@@ -200,6 +200,11 @@ const MainContainer = () => {
         setEquations([...equations]);
     };
 
+    const deleteVar = (key) => {
+        delete vars[varMode][key];
+        setVars({ ...vars });
+    };
+
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
@@ -207,6 +212,7 @@ const MainContainer = () => {
                     vars={vars[varMode]}
                     isStatic={varMode}
                     evaluate={evaluate}
+                    delete={deleteVar}
                 />
                 <EquationViewer
                     {...{ equations, setEquationInputter, deleteEquation }}
