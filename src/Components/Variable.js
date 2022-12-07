@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Variable = (props) => {
-    const { name, value, isStatic } = props;
+    const { name, value, isStatic, evaluate } = props;
 
     return (
         <div
@@ -19,7 +19,7 @@ const Variable = (props) => {
                 <span className="font-bold">{name}</span>
                 <span className="ml-4">{value}</span>
                 {!isStatic && (
-                    <span className="ml-auto">{props.evaluate(value)}</span>
+                    <span className="ml-auto">{evaluate(value)}</span>
                 )}
             </div>
         </div>

@@ -3,6 +3,7 @@ import Variable from './Variable';
 
 const VariableViewer = (props) => {
     const { vars, isStatic, evaluate, deleteVar } = props;
+
     return (
         <section className="px-4 flex flex-col gap-4">
             <h1 className="text-center text-xl font-bold">Variables</h1>

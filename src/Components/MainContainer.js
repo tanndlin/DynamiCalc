@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import Math from 'math-expression-evaluator';
 import VariableViewer from './VariableViewer';
 import EquationViewer from './EquationViewer';
 import Options from './Options';
+import { evaluate } from '../utils/Evaluate';
 
 const MainContainer = () => {
     const [equations, setEquations] = React.useState(
@@ -25,107 +25,9 @@ const MainContainer = () => {
         localStorage.setItem('vars', JSON.stringify(vars));
     }, [vars]);
 
-    const getVarMode = () => {
-        return varMode ? 'static' : 'dynamic';
-    };
-
-    const replaceVars = (input) => {
-        let newInput = input;
-        for (const key in vars[varMode]) {
-            newInput = newInput.replace(key, `(${vars[varMode][key]})`);
-        }
-
-        // Recursively evaluate vars
-        if (newInput !== input) {
-            return replaceVars(newInput);
-        }
-
-        return newInput;
-    };
-
-    const assignStaticVar = (key, value) => {
-        vars[varMode][key] = evaluate(replaceVars(value));
-        setVars({ ...vars });
-        return vars[varMode][key];
-    };
-
-    const createVar = (key, value) => {
-        if (getVarMode() === 'static') {
-            return assignStaticVar(key, value);
-        }
-
-        // This is a dynamic var
-        if (causesCircularReference(key, value)) {
-            throw new Error('This causes a circular reference');
-        }
-
-        vars[varMode][key] = value;
-
-        setVars({ ...vars });
-        return vars[varMode][key];
-    };
-
-    const causesCircularReference = (key, value) => {
-        // Check for self reference
-        if (value.includes(key[0])) {
-            return true;
-        }
-
-        // Use BFS
-        const newVars = { ...vars[varMode] };
-        newVars[key] = value;
-
-        const queue = [key];
-        const visited = new Set();
-
-        while (queue.length > 0) {
-            const current = queue.shift();
-            visited.add(current);
-
-            const references = newVars[current].match(/[a-zA-Z]/g);
-            if (!references) {
-                continue;
-            }
-
-            for (const reference of references) {
-                if (reference === key) {
-                    return true;
-                }
-
-                if (!visited.has(reference)) {
-                    queue.push(reference);
-                }
-            }
-        }
-
-        return false;
-    };
-
-    const evaluate = (input) => {
-        try {
-            input = `${input}`.replace(/ /g, '');
-
-            // Replace ans with previous answer
-            if (input.includes('ans')) {
-                const lastOutput = equations[equations.length - 1]?.output;
-                if (lastOutput === undefined) {
-                    throw new Error('No previous answer');
-                }
-
-                input = input.replace('ans', lastOutput);
-            }
-
-            if (input.includes('=') && input.indexOf('=') === 1) {
-                const [key, value] = input.split('=');
-                return createVar(key, value);
-            }
-
-            input = replaceVars(input);
-            return Math.eval(input);
-        } catch (error) {
-            return 'ERROR';
-        }
-    };
+    React.useEffect(() => {
+        localStorage.setItem('varMode', JSON.stringify(varMode));
+    }, [varMode]);
 
     let index = -1;
     const handleKeyDown = (e) => {
@@ -136,7 +38,13 @@ const MainContainer = () => {
             }
 
             const input = e.target.value;
-            const output = evaluate(input);
+            const output = evaluate({
+                input,
+                equations,
+                vars,
+                varMode,
+                setVars
+            });
             setEquations([...equations, { input, output }]);
             e.target.value = '';
 
@@ -186,8 +94,6 @@ const MainContainer = () => {
             e.preventDefault();
             // Put answer in front of operator
             e.target.value = `ans${e.key}`;
-            console.log('here');
-            console.log(e.target.value);
         }
     };
 
@@ -212,7 +118,14 @@ const MainContainer = () => {
                     {...{
                         vars: vars[varMode],
                         isStatic: varMode,
-                        evaluate,
+                        evaluate: (input) =>
+                            evaluate({
+                                input,
+                                equations,
+                                vars,
+                                varMode,
+                                setVars
+                            }),
                         delete: deleteVar
                     }}
                 />
