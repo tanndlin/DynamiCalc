@@ -43,25 +43,81 @@ const MainContainer = () => {
         return newInput;
     };
 
+    const assignStaticVar = (key, value) => {
+        vars[varMode][key] = evaluate(replaceVars(value));
+        setVars({ ...vars });
+        return vars[varMode][key];
+    };
+
+    const createVar = (key, value) => {
+        if (getVarMode() === 'static') {
+            return assignStaticVar(key, value);
+        }
+
+        // This is a dynamic var
+        if (causesCircularReference(key, value)) {
+            throw new Error('This causes a circular reference');
+        }
+
+        vars[varMode][key] = value;
+
+        setVars({ ...vars });
+        return vars[varMode][key];
+    };
+
+    const causesCircularReference = (key, value) => {
+        // Check for self reference
+        if (value.includes(key[0])) {
+            return true;
+        }
+
+        // Use BFS
+        const newVars = { ...vars[varMode] };
+        newVars[key] = value;
+
+        const queue = [key];
+        const visited = new Set();
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            visited.add(current);
+
+            const references = newVars[current].match(/[a-zA-Z]/g);
+            if (!references) {
+                continue;
+            }
+
+            for (const reference of references) {
+                if (reference === key) {
+                    return true;
+                }
+
+                if (!visited.has(reference)) {
+                    queue.push(reference);
+                }
+            }
+        }
+
+        return false;
+    };
+
     const evaluate = (input) => {
         try {
             input = `${input}`.replace(/ /g, '');
 
-            if (input.includes('=') && input.indexOf('=') === 1) {
-                const [key, value] = input.split('=');
-                if (getVarMode() === 'static') {
-                    vars[varMode][key] = evaluate(replaceVars(value));
-                } else {
-                    if (value.includes(key[0])) {
-                        throw new Error(
-                            'Variable cannot be assigned to itself'
-                        );
-                    }
-                    vars[varMode][key] = value;
+            // Replace ans with previous answer
+            if (input.includes('ans')) {
+                const lastOutput = equations[equations.length - 1]?.output;
+                if (lastOutput === undefined) {
+                    throw new Error('No previous answer');
                 }
 
-                setVars({ ...vars });
-                return vars[varMode][key];
+                input = input.replace('ans', lastOutput);
+            }
+
+            if (input.includes('=') && input.indexOf('=') === 1) {
+                const [key, value] = input.split('=');
+                return createVar(key, value);
             }
 
             input = replaceVars(input);
@@ -116,6 +172,17 @@ const MainContainer = () => {
             }
             // Put cursor at the end of the input
             e.target.selectionStart = e.target.value.length;
+        }
+
+        if (
+            ['-', '+', '*', '/'].includes(e.key) &&
+            e.target.value.length === 0
+        ) {
+            e.preventDefault();
+            // Put answer in front of operator
+            e.target.value = `ans${e.key}`;
+            console.log('here');
+            console.log(e.target.value);
         }
     };
 
