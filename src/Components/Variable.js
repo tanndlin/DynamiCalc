@@ -14,12 +14,14 @@ const Variable = (props) => {
                 value="&times;"
                 onClick={props.delete}
             />
-            <div className="padder"></div>
+            <div className="padder" />
             <div className="flex">
                 <span className="font-bold h-5">{name + '='}</span>
                 <span className="ml-4">{value}</span>
                 {!isStatic && (
-                    <span className="ml-auto">{evaluate(value)}</span>
+                    <span className="ml-auto max-w-[50%] overflow-x-hidden">
+                        {evaluate(value)}
+                    </span>
                 )}
             </div>
         </div>
