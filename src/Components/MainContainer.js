@@ -2,18 +2,19 @@
 import React from 'react';
 import Math from 'math-expression-evaluator';
 import VariableViewer from './VariableViewer';
+import EquationViewer from './EquationViewer';
 
 const MainContainer = () => {
-    const [formulas, setFormulas] = React.useState(
-        JSON.parse(localStorage.getItem('formulas')) || []
+    const [equations, setEquations] = React.useState(
+        JSON.parse(localStorage.getItem('equations')) || []
     );
     const [vars, setVars] = React.useState(
         JSON.parse(localStorage.getItem('vars')) ?? {}
     );
 
     React.useEffect(() => {
-        localStorage.setItem('formulas', JSON.stringify(formulas));
-    }, [formulas]);
+        localStorage.setItem('equations', JSON.stringify(equations));
+    }, [equations]);
 
     React.useEffect(() => {
         console.log('here');
@@ -55,18 +56,18 @@ const MainContainer = () => {
         if (e.key === 'Enter') {
             const input = e.target.value;
             const output = evaluate(input);
-            setFormulas([...formulas, { input, output }]);
+            setEquations([...equations, { input, output }]);
             e.target.value = '';
         }
 
         if (e.key === 'ArrowUp') {
             e.preventDefault();
             if (index === -1) {
-                index = formulas.length - 1;
-                e.target.value = formulas[index].input;
+                index = equations.length - 1;
+                e.target.value = equations[index].input;
             } else if (index > 0) {
                 index--;
-                e.target.value = formulas[index].input;
+                e.target.value = equations[index].input;
             } else {
                 index = -1;
                 e.target.value = '';
@@ -79,10 +80,10 @@ const MainContainer = () => {
             e.preventDefault();
             if (index === -1) {
                 index = 0;
-                e.target.value = formulas[index].input;
-            } else if (index < formulas.length - 1) {
+                e.target.value = equations[index].input;
+            } else if (index < equations.length - 1) {
                 index++;
-                e.target.value = formulas[index].input;
+                e.target.value = equations[index].input;
             } else {
                 index = -1;
                 e.target.value = '';
@@ -93,24 +94,14 @@ const MainContainer = () => {
     };
 
     return (
-        <main className="bg-blue-400 bg-opacity-50 h-minus-header flex flex-col">
+        <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
                 <VariableViewer vars={vars} />
-                <div
-                    id="previousArea"
-                    className="bg-gray-200 container px-4 py-4"
-                >
-                    {formulas.map((formula, i) => (
-                        <div key={i} className="block">
-                            <div>{formula.input}</div>
-                            <div className="text-right">{formula.output}</div>
-                        </div>
-                    ))}
-                </div>
+                <EquationViewer equations={equations} />
             </div>
             <div id="inputArea" className="flex">
                 <input
-                    className="m-auto"
+                    className="m-auto text-black"
                     type="text"
                     onKeyDown={(e) => {
                         handleKeyDown(e);

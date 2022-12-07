@@ -1,17 +1,13 @@
 import React from 'react';
+import Variable from './Variable';
 
 const VariableViewer = (props) => {
     return (
-        <section className="px-4 border-2 border-black">
+        <section className="px-4 border-2 border-black flex flex-col gap-4">
             <h1 className="text-center text-xl font-bold">Variables</h1>
-            {Object.keys(props.vars).map((key) => {
-                return (
-                    <div key={key}>
-                        <span className="font-bold">{key + ':'}</span>
-                        <span className="ml-4">{props.vars[key]}</span>
-                    </div>
-                );
-            })}
+            {Object.keys(props.vars).map((key) => (
+                <Variable key={key} name={key} value={props.vars[key]} />
+            ))}
         </section>
     );
 };
