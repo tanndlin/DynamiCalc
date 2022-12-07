@@ -4,8 +4,22 @@ import Math from 'math-expression-evaluator';
 import VariableViewer from './VariableViewer';
 
 const MainContainer = () => {
-    const [formulas, setFormulas] = React.useState([]);
-    const [vars, setVars] = React.useState({});
+    const [formulas, setFormulas] = React.useState(
+        JSON.parse(localStorage.getItem('formulas')) || []
+    );
+    const [vars, setVars] = React.useState(
+        JSON.parse(localStorage.getItem('vars')) ?? {}
+    );
+
+    React.useEffect(() => {
+        localStorage.setItem('formulas', JSON.stringify(formulas));
+    }, [formulas]);
+
+    React.useEffect(() => {
+        console.log('here');
+        console.log(vars);
+        localStorage.setItem('vars', JSON.stringify(vars));
+    }, [vars]);
 
     const replaceVars = (input) => {
         for (const key in vars) {
@@ -16,13 +30,14 @@ const MainContainer = () => {
     };
 
     const evaluate = (input) => {
+        input = input.replace(/ /g, '');
         console.log(vars);
 
         if (input.includes('=') && input.indexOf('=') === 1) {
             const [key, value] = input.split('=');
             vars[key] = evaluate(replaceVars(value));
 
-            setVars(vars);
+            setVars({ ...vars });
             return vars[key];
         }
 
@@ -79,11 +94,11 @@ const MainContainer = () => {
 
     return (
         <main className="bg-blue-400 bg-opacity-50 h-minus-header flex flex-col">
-            <div id="mainContainer">
+            <div id="mainContainer" className="h-9/10">
                 <VariableViewer vars={vars} />
                 <div
                     id="previousArea"
-                    className="bg-gray-200 container h-[1000px] px-4 py-4"
+                    className="bg-gray-200 container px-4 py-4"
                 >
                     {formulas.map((formula, i) => (
                         <div key={i} className="block">
