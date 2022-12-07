@@ -13,7 +13,7 @@ const VariableViewer = (props) => {
                     <Variable
                         {...{
                             key,
-                            name,
+                            name: key,
                             value: vars[key],
                             isStatic,
                             evaluate,
