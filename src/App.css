@@ -2,3 +2,25 @@
   display: grid;
   grid-template-columns: 1fr 50vw 1fr;
 }
+
+.close{
+  /* absolute -top-2 right-2 cursor-pointer text-[24px] font-bold hover:text-red-500 */
+  position: absolute;
+  top: -.5rem;
+  right: .5rem;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+  transition: color 0.3s ease-in-out;
+  color:white;
+  visibility: hidden;
+}
+
+.close:hover{
+  color: #ff0000;
+}
+
+.equation:hover .close{
+  visibility: visible;
+}

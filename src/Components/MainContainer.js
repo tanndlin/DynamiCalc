@@ -94,15 +94,27 @@ const MainContainer = () => {
         }
     };
 
+    const setEquationInputter = (value) => {
+        document.getElementById('equationInputter').value = value;
+    };
+
+    const deleteEquation = (index) => {
+        equations.splice(index, 1);
+        setEquations([...equations]);
+    };
+
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
                 <VariableViewer vars={vars} />
-                <EquationViewer equations={equations} />
+                <EquationViewer
+                    {...{ equations, setEquationInputter, deleteEquation }}
+                />
                 <Options {...{ setEquations, setVars }} />
             </div>
             <div id="inputArea" className="flex">
                 <input
+                    id="equationInputter"
                     className="m-auto text-black"
                     type="text"
                     onKeyDown={(e) => {
