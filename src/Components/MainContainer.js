@@ -121,8 +121,9 @@ const MainContainer = () => {
             <div id="inputArea" className="flex">
                 <input
                     id="equationInputter"
-                    className="m-auto text-black"
+                    className="m-auto text-black px-2 py-1 rounded-md mt-8 w-1/2"
                     type="text"
+                    placeholder="Enter an equation or set a varible. ie: 2+2 or A=100/5"
                     onKeyDown={(e) => {
                         handleKeyDown(e);
                     }}
