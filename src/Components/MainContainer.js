@@ -130,6 +130,11 @@ const MainContainer = () => {
     let index = -1;
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
+            // If the input is empty, run last equation
+            if (e.target.value.length === 0) {
+                e.target.value = equations[equations.length - 1].input;
+            }
+
             const input = e.target.value;
             const output = evaluate(input);
             setEquations([...equations, { input, output }]);
