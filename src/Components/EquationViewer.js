@@ -11,15 +11,17 @@ const EquationViewer = (props) => {
         >
             {equations.map((equation, i) => (
                 <Equation
-                    key={i}
-                    equation={equation}
-                    setEquationInputter={setEquationInputter}
-                    delete={() => {
-                        props.deleteEquation(i);
-                    }}
-                    copy={(e) => {
-                        if (e.target.className !== 'close') {
-                            props.setEquationInputter(equation.input);
+                    {...{
+                        key: i,
+                        equation,
+                        setEquationInputter,
+                        delete: () => {
+                            props.deleteEquation(i);
+                        },
+                        copy: (e) => {
+                            if (e.target.className !== 'close') {
+                                props.setEquationInputter(equation.input);
+                            }
                         }
                     }}
                 />

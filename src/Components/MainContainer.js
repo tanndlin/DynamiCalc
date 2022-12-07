@@ -209,10 +209,12 @@ const MainContainer = () => {
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
                 <VariableViewer
-                    vars={vars[varMode]}
-                    isStatic={varMode}
-                    evaluate={evaluate}
-                    delete={deleteVar}
+                    {...{
+                        vars: vars[varMode],
+                        isStatic: varMode,
+                        evaluate,
+                        delete: deleteVar
+                    }}
                 />
                 <EquationViewer
                     {...{ equations, setEquationInputter, deleteEquation }}
