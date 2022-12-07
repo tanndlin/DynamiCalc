@@ -59,6 +59,12 @@ const MainContainer = () => {
             const output = evaluate(input);
             setEquations([...equations, { input, output }]);
             e.target.value = '';
+
+            // Scroll to bottom of previousArea
+            setTimeout(() => {
+                const previousArea = document.getElementById('previousArea');
+                previousArea.scrollTop = previousArea.scrollHeight;
+            }, 100);
         }
 
         if (e.key === 'ArrowUp') {
