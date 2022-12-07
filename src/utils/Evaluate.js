@@ -15,6 +15,7 @@ export const evaluate = ({ input, equations, vars, varMode, setVars }) => {
         }
 
         if (input.includes('=') && input.indexOf('=') === 1) {
+            console.log('here');
             const [key, value] = input.split('=');
             return createVar({ key, value, equations, vars, varMode, setVars });
         }
@@ -33,6 +34,7 @@ export const getVarMode = (varMode) => {
 
 export const replaceVars = ({ input, vars, varMode }) => {
     let newInput = input;
+    console.log(input);
     for (const key in vars[varMode]) {
         newInput = newInput.replace(key, `(${vars[varMode][key]})`);
     }
@@ -54,7 +56,7 @@ export const assignStaticVar = ({
     setVars
 }) => {
     vars[varMode][key] = evaluate({
-        input: replaceVars({ value, vars, varMode }),
+        input: replaceVars({ input: value, vars, varMode }),
         equations,
         vars,
         varMode,
