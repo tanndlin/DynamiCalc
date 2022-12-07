@@ -98,7 +98,9 @@ const MainContainer = () => {
     };
 
     const setEquationInputter = (value) => {
-        document.getElementById('equationInputter').value = value;
+        const inputField = document.getElementById('equationInputter');
+        inputField.value = value;
+        inputField.focus();
     };
 
     const deleteEquation = (index) => {
@@ -126,7 +128,7 @@ const MainContainer = () => {
                                 varMode,
                                 setVars
                             }),
-                        delete: deleteVar
+                        deleteVar
                     }}
                 />
                 <EquationViewer
