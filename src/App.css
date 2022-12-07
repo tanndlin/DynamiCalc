@@ -47,3 +47,15 @@
   visibility: visible;
 }
 
+.indicator{
+  transition: 300ms;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width:40px;
+  height:40px;
+}
+
+.indicator-false{
+  right:0;
+}

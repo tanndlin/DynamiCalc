@@ -10,7 +10,11 @@ const MainContainer = () => {
         JSON.parse(localStorage.getItem('equations')) || []
     );
     const [vars, setVars] = React.useState(
-        JSON.parse(localStorage.getItem('vars')) ?? {}
+        JSON.parse(localStorage.getItem('vars')) ?? { true: {}, false: {} }
+    );
+
+    const [varMode, setVarMode] = React.useState(
+        JSON.parse(localStorage.getItem('varMode')) ?? false
     );
 
     React.useEffect(() => {
@@ -18,34 +22,49 @@ const MainContainer = () => {
     }, [equations]);
 
     React.useEffect(() => {
-        console.log('here');
-        console.log(vars);
         localStorage.setItem('vars', JSON.stringify(vars));
     }, [vars]);
 
+    const getVarMode = () => {
+        return varMode ? 'static' : 'dynamic';
+    };
+
     const replaceVars = (input) => {
-        for (const key in vars) {
-            input = input.replace(key, vars[key]);
+        let newInput = input;
+        for (const key in vars[varMode]) {
+            newInput = newInput.replace(key, vars[varMode][key]);
         }
 
-        return input;
+        // Recursively evaluate vars
+        if (newInput !== input) {
+            return replaceVars(newInput);
+        }
+
+        return newInput;
     };
 
     const evaluate = (input) => {
-        input = input.replace(/ /g, '');
-        console.log(vars);
-
-        if (input.includes('=') && input.indexOf('=') === 1) {
-            const [key, value] = input.split('=');
-            vars[key] = evaluate(replaceVars(value));
-
-            setVars({ ...vars });
-            return vars[key];
-        }
-
-        input = replaceVars(input);
-        console.log(input);
         try {
+            input = `${input}`.replace(/ /g, '');
+
+            if (input.includes('=') && input.indexOf('=') === 1) {
+                const [key, value] = input.split('=');
+                if (getVarMode() === 'static') {
+                    vars[varMode][key] = evaluate(replaceVars(value));
+                } else {
+                    if (value.includes(key[0])) {
+                        throw new Error(
+                            'Variable cannot be assigned to itself'
+                        );
+                    }
+                    vars[varMode][key] = value;
+                }
+
+                setVars({ ...vars });
+                return vars[varMode][key];
+            }
+
+            input = replaceVars(input);
             return Math.eval(input);
         } catch (error) {
             return 'ERROR';
@@ -112,11 +131,15 @@ const MainContainer = () => {
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
-                <VariableViewer vars={vars} />
+                <VariableViewer
+                    vars={vars[varMode]}
+                    isStatic={varMode}
+                    evaluate={evaluate}
+                />
                 <EquationViewer
                     {...{ equations, setEquationInputter, deleteEquation }}
                 />
-                <Options {...{ setEquations, setVars }} />
+                <Options {...{ setEquations, setVars, varMode, setVarMode }} />
             </div>
             <div id="inputArea" className="flex">
                 <input
