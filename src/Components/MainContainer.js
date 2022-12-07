@@ -32,7 +32,7 @@ const MainContainer = () => {
     const replaceVars = (input) => {
         let newInput = input;
         for (const key in vars[varMode]) {
-            newInput = newInput.replace(key, vars[varMode][key]);
+            newInput = newInput.replace(key, `(${vars[varMode][key]})`);
         }
 
         // Recursively evaluate vars
