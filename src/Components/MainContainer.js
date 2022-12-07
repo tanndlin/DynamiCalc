@@ -3,6 +3,7 @@ import React from 'react';
 import Math from 'math-expression-evaluator';
 import VariableViewer from './VariableViewer';
 import EquationViewer from './EquationViewer';
+import Options from './Options';
 
 const MainContainer = () => {
     const [equations, setEquations] = React.useState(
@@ -98,6 +99,7 @@ const MainContainer = () => {
             <div id="mainContainer" className="h-9/10">
                 <VariableViewer vars={vars} />
                 <EquationViewer equations={equations} />
+                <Options {...{ setEquations, setVars }} />
             </div>
             <div id="inputArea" className="flex">
                 <input
