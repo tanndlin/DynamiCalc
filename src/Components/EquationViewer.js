@@ -82,7 +82,6 @@ const EquationViewer = (props) => {
 
     const makeStatic = () => {
         const inputField = document.getElementById('equationInputter');
-        console.log(inputField.value);
         if (!inputField.value.includes('=')) {
             inputField.value = evaluate({
                 input: inputField.value,
@@ -96,8 +95,6 @@ const EquationViewer = (props) => {
 
         const [currentVar, toReplace] = inputField.value.split('=');
 
-        console.log(toReplace);
-
         const replaced = evaluate({
             input: toReplace,
             equations,
@@ -106,7 +103,6 @@ const EquationViewer = (props) => {
             setVars
         });
 
-        console.log(replaced);
         inputField.value = `${currentVar}=${replaced}`;
     };
 
