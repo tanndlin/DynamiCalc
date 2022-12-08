@@ -17,6 +17,8 @@ export const evaluate = ({ input, equations, vars, varMode, setVars }) => {
         if (input.includes('=') && input.indexOf('=') === 1) {
             console.log('here');
             const [key, value] = input.split('=');
+
+            console.log(value);
             return createVar({ key, value, equations, vars, varMode, setVars });
         }
 
@@ -98,7 +100,7 @@ export const createVar = ({
 
 export const causesCircularReference = ({ key, value, vars, varMode }) => {
     // Check for self reference
-    if (value.includes(key[0])) {
+    if (value.includes(key)) {
         return true;
     }
 
@@ -113,7 +115,7 @@ export const causesCircularReference = ({ key, value, vars, varMode }) => {
         const current = queue.shift();
         visited.add(current);
 
-        const references = newVars[current].match(/[a-zA-Z]/g);
+        const references = newVars[current].match(/[A-Z]/g);
         if (!references) {
             continue;
         }
