@@ -142,7 +142,7 @@ const EquationViewer = (props) => {
                         }}
                     />
                     <button
-                        className="bg-sky-900  rounded-md p-2"
+                        className="bg-sky-900 rounded-md w-1/5 p-2"
                         onClick={makeStatic}
                     >
                         Make Static
