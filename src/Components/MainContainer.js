@@ -3,7 +3,7 @@ import React from 'react';
 import VariableViewer from './VariableViewer';
 import EquationViewer from './EquationViewer';
 import Options from './Options';
-import { evaluate } from '../utils/Evaluate';
+import { evaluate, replaceVars } from '../utils/Evaluate';
 
 const MainContainer = () => {
     const [equations, setEquations] = React.useState(
@@ -113,6 +113,36 @@ const MainContainer = () => {
         setVars({ ...vars });
     };
 
+    const makeStatic = () => {
+        const inputField = document.getElementById('equationInputter');
+        console.log(inputField.value);
+        if (!inputField.value.includes('=')) {
+            inputField.value = evaluate({
+                input: inputField.value,
+                equations,
+                vars,
+                varMode,
+                setVars
+            });
+            return;
+        }
+
+        const [currentVar, toReplace] = inputField.value.split('=');
+
+        console.log(toReplace);
+
+        const replaced = evaluate({
+            input: toReplace,
+            equations,
+            vars,
+            varMode,
+            setVars
+        });
+
+        console.log(replaced);
+        inputField.value = `${currentVar}=${replaced}`;
+    };
+
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
@@ -137,15 +167,23 @@ const MainContainer = () => {
                 <Options {...{ setEquations, setVars, varMode, setVarMode }} />
             </div>
             <div id="inputArea" className="flex">
-                <input
-                    id="equationInputter"
-                    className="m-auto text-black px-2 py-1 rounded-md mt-8 w-1/2"
-                    type="text"
-                    placeholder="Enter an equation or set a varible. ie: 2+2 or A=100/5"
-                    onKeyDown={(e) => {
-                        handleKeyDown(e);
-                    }}
-                />
+                <span className="m-auto w-1/2 mt-8 gap-4 flex">
+                    <input
+                        id="equationInputter"
+                        className="text-black px-2 py-1 rounded-md w-4/5"
+                        type="text"
+                        placeholder="Enter an equation or set a varible. ie: 2+2 or A=100/5"
+                        onKeyDown={(e) => {
+                            handleKeyDown(e);
+                        }}
+                    />
+                    <button
+                        className="bg-sky-900  rounded-md p-2"
+                        onClick={makeStatic}
+                    >
+                        Make Static
+                    </button>
+                </span>
             </div>
         </main>
     );
