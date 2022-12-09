@@ -1,5 +1,5 @@
 import React from 'react';
-import EdittableText from './EdittableText';
+import EditableText from './EditableText';
 
 const Variable = (props) => {
     const { name, variable, isStatic, evaluate } = props;
@@ -31,7 +31,7 @@ const Variable = (props) => {
                     )}
                 </div>
                 <span>
-                    <EdittableText
+                    <EditableText
                         id={name + 'description'}
                         className="mt-2"
                         value={description}

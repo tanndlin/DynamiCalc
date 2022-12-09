@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-function EdittableText(props) {
+function EditableText(props) {
     function onBlur(e) {
         props.onBlur && props.onBlur(e);
     }
@@ -26,7 +26,7 @@ function EdittableText(props) {
                 id={props.id}
                 onChange={onChange}
                 onBlur={onBlur}
-                className="font-bold editable"
+                className="editable"
                 type={props.type}
                 value={props.value}
             />
@@ -35,4 +35,4 @@ function EdittableText(props) {
     );
 }
 
-export default EdittableText;
+export default EditableText;

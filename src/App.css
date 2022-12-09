@@ -89,7 +89,7 @@
 }
 
 .variable:hover{
-  @apply bg-tertiary;
+  @apply bg-sky-900;
   max-height: 9999px;
 }
 
@@ -119,14 +119,13 @@
     padding: 0;
     margin: 1px 0;
     background-color: none;
-    width: 3ch;
     height: min-content;
     font-weight: bold;
   }
   
   .editable:hover,
   .editable:focus {
-  color:black;
+    color:black;
     margin: 0;
     background-color: #f5f5f5;
     border: 1px solid black;
@@ -135,10 +134,12 @@
 }
 
 #fakeSpan {
-    position: absolute;
-    left: -9999px;
-    display: inline-block;
-    min-width: 6em;
+  position: absolute;
+  left: -9999px;
+  display: inline-block;
+  min-width: 6em;
+  font-weight: bold;
+  font-size: medium;
 }
 
 .loader {
