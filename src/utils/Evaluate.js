@@ -7,7 +7,8 @@ export const evaluate = ({
     varMode,
     createNewVar,
     createToast,
-    removeToast
+    removeToast,
+    showToasts
 }) => {
     try {
         input = `${input}`.replace(/ /g, '');
@@ -37,6 +38,10 @@ export const evaluate = ({
         input = replaceVars({ input, vars, varMode });
         return Math.eval(input);
     } catch (error) {
+        if (!showToasts) {
+            return 'ERROR';
+        }
+
         const id = createToast({
             title: 'Error',
             equation: input,

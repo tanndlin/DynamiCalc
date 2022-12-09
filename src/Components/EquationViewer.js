@@ -1,6 +1,6 @@
 import React from 'react';
 import Equation from './Equation';
-import { evaluate } from '../utils/Evaluate';
+import { evaluate as ev } from '../utils/Evaluate';
 
 const EquationViewer = (props) => {
     const {
@@ -14,6 +14,19 @@ const EquationViewer = (props) => {
         removeToast
     } = props;
 
+    const evaluate = (input) => {
+        return ev({
+            input,
+            equations,
+            vars,
+            varMode,
+            createNewVar,
+            createToast,
+            removeToast,
+            showToasts: true
+        });
+    };
+
     let index = -1;
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -23,15 +36,7 @@ const EquationViewer = (props) => {
             }
 
             const input = e.target.value;
-            const output = evaluate({
-                input,
-                equations,
-                vars,
-                varMode,
-                createNewVar,
-                createToast,
-                removeToast
-            });
+            const output = evaluate(input);
             setEquations([...equations, { input, output }]);
             e.target.value = '';
 
@@ -87,29 +92,13 @@ const EquationViewer = (props) => {
     const makeStatic = () => {
         const inputField = document.getElementById('equationInputter');
         if (!inputField.value.includes('=')) {
-            inputField.value = evaluate({
-                input: inputField.value,
-                equations,
-                vars,
-                varMode,
-                createNewVar,
-                createToast,
-                removeToast
-            });
+            inputField.value = evaluate(inputField.value);
             return;
         }
 
         const [currentVar, toReplace] = inputField.value.split('=');
 
-        const replaced = evaluate({
-            input: toReplace,
-            equations,
-            vars,
-            varMode,
-            createNewVar,
-            createToast,
-            removeToast
-        });
+        const replaced = evaluate(toReplace);
 
         inputField.value = `${currentVar}=${replaced}`;
     };

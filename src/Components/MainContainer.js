@@ -73,7 +73,8 @@ const MainContainer = (props) => {
                                 varMode,
                                 createNewVar,
                                 createToast,
-                                removeToast
+                                removeToast,
+                                showToasts: false
                             }),
                         editVar,
                         deleteVar
