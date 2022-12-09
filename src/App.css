@@ -84,10 +84,6 @@
   overflow: hidden;
 }
 
-.variable textarea{
-  visibility: hidden;
-}
-
 .variable:hover{
   @apply bg-sky-900;
   max-height: 9999px;
@@ -102,8 +98,17 @@
   max-height: 20px;
 }
 
-.variable:hover textarea{
+.variable .editableContainer{
+  visibility: hidden;
+  transition: 300ms;
+  max-height: 0;
+  opacity: 0;
+}
+
+.variable:hover .editableContainer{
   visibility: visible;
+  max-height: 26px;
+  opacity: 1;
 }
 
 .padder{

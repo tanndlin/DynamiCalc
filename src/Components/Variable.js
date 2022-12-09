@@ -33,7 +33,6 @@ const Variable = (props) => {
                 <span>
                     <EditableText
                         id={name + 'description'}
-                        className="mt-2"
                         value={description}
                         onChange={editVar}
                     />

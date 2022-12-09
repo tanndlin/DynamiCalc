@@ -21,7 +21,7 @@ function EditableText(props) {
     }, []);
 
     return (
-        <div className={props.className}>
+        <div className={`editableContainer ${props.className}`}>
             <input
                 id={props.id}
                 onChange={onChange}
