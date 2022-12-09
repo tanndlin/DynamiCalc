@@ -32,6 +32,9 @@ button {
     display: grid;
     grid-template-columns: 35vw 50vw 15vw;
 
+    background-image: radial-gradient(circle, rgb(12 74 110) 1px, rgba(0, 0, 0, 0) 1px);
+    background-size: 40px 40px;
+
     @media (max-width: 1300px) {
         display: block;
     }
