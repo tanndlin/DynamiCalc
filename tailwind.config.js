@@ -15,7 +15,7 @@ module.exports = {
                 '9/10': '90%',
                 'minus-header': 'calc(100vh - 4rem)',
                 calendar: 'calc((100vh - 4rem) * 9/10 * 4/5)',
-                500: '500px',
+                500: '500px'
             },
             width: {
                 '1/10': '10%',
@@ -26,7 +26,7 @@ module.exports = {
                 '6/10': '60%',
                 '7/10': '70%',
                 '8/10': '80%',
-                '9/10': '90%',
+                '9/10': '90%'
             },
             minHeight: {
                 '1/2': '50%',
@@ -39,15 +39,15 @@ module.exports = {
                 600: '600px',
                 700: '700px',
                 800: '800px',
-                900: '900px',
+                900: '900px'
             },
             maxHeight: {
                 '7/10screen': '70vh',
                 '3/4screen': '75vh',
                 '8/10screen': '80vh',
-                '9/10screen': '90vh',
-            },
-        },
+                '9/10screen': '90vh'
+            }
+        }
     },
-    plugins: [],
+    plugins: []
 };

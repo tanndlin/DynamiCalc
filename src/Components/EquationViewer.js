@@ -139,7 +139,7 @@ const EquationViewer = (props) => {
                 ))}
             </div>
             <footer id="inputArea" className="flex">
-                <span className="m-auto w-full mt-8 gap-4 flex">
+                <span className="container mx-auto mt-8 gap-4 flex">
                     <input
                         id="equationInputter"
                         className="text-black px-2 py-1 rounded-md w-4/5"

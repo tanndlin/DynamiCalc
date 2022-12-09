@@ -59,8 +59,8 @@ const MainContainer = (props) => {
     };
 
     return (
-        <main className="bg-gray-900 h-minus-header flex flex-col text-white">
-            <div id="mainContainer" className="min-h-9/10">
+        <main className="bg-gray-900 h-minus-header text-white">
+            <div id="mainContainer" className="bg-gray-900 min-h-9/10">
                 <VariableViewer
                     {...{
                         vars: vars[varMode],
