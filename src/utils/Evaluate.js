@@ -116,6 +116,12 @@ export const causesCircularReference = ({ key, value, vars, varMode }) => {
         const current = queue.shift();
         visited.add(current);
 
+        // If the var doesn't exist, skip it
+        // Only care about vars that are referenced
+        if (!newVars[current]) {
+            continue;
+        }
+
         const references = newVars[current].value.match(/[A-Z]/g);
         if (!references) {
             continue;
