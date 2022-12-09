@@ -32,7 +32,7 @@ button {
     display: grid;
     grid-template-columns: 35vw 50vw 15vw;
 
-    @media (max-width: 1000px) {
+    @media (max-width: 1300px) {
         display: block;
     }
 }
