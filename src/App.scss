@@ -38,7 +38,6 @@ button {
 }
 
 .close {
-    /* absolute -top-2 right-2 cursor-pointer text-[24px] font-bold hover:text-red-500 */
     position: absolute;
     top: -.5rem;
     right: .5rem;
@@ -51,13 +50,13 @@ button {
     visibility: hidden;
     opacity: 0;
     transition: 300ms;
+
+    &:hover {
+        color: #ff0000;
+    }
 }
 
-.close:hover {
-    color: #ff0000;
-}
-
-.equation:hover .close {
+*:hover>.close {
     visibility: visible;
     opacity: 1;
 }
@@ -91,11 +90,6 @@ button {
     &:hover {
         @apply bg-sky-900;
         max-height: 9999px;
-
-        .close {
-            visibility: visible;
-            opacity: 1;
-        }
 
         .padder {
             max-height: 20px;
