@@ -103,6 +103,12 @@ const EquationViewer = (props) => {
         inputField.value = `${currentVar}=${replaced}`;
     };
 
+    React.useEffect(() => {
+        // Scroll to bottom of previousArea
+        const previousArea = document.getElementById('previousArea');
+        previousArea.scrollTop = previousArea.scrollHeight;
+    }, []);
+
     return (
         <section id="equations" className="h-minus-header">
             <h1 className="text-center text-3xl font-bold mb-2">Equations</h1>
