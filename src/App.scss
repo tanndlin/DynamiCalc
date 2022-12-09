@@ -31,22 +31,9 @@ button {
 #mainContainer {
     display: grid;
     grid-template-columns: 35vw 50vw 15vw;
-}
 
-@media (max-width: 1000px) {
-    #mainContainer {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        place-items: center;
-    }
-
-    #mainContainer>section,
-    div,
-    aside {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
+    @media (max-width: 1000px) {
+        display: block;
     }
 }
 

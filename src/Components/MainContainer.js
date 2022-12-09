@@ -60,7 +60,7 @@ const MainContainer = (props) => {
 
     return (
         <main className="bg-primary h-minus-header text-white">
-            <div id="mainContainer" className="bg-primary min-h-9/10">
+            <article id="mainContainer" className="bg-primary min-h-9/10">
                 <VariableViewer
                     {...{
                         vars: vars[varMode],
@@ -93,7 +93,7 @@ const MainContainer = (props) => {
                     }}
                 />
                 <Options {...{ setEquations, setVars, varMode, setVarMode }} />
-            </div>
+            </article>
         </main>
     );
 };

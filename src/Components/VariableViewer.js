@@ -5,7 +5,7 @@ const VariableViewer = (props) => {
     const { vars, isStatic, evaluate, deleteVar, editVar } = props;
 
     return (
-        <section className="px-4 flex flex-col gap-4">
+        <section id="variables" className="px-4 flex flex-col gap-4">
             <h1 className="text-center text-3xl font-bold">Variables</h1>
             {Object.keys(props.vars)
                 .sort()

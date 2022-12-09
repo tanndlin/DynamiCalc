@@ -115,11 +115,11 @@ const EquationViewer = (props) => {
     };
 
     return (
-        <div className="h-minus-header">
+        <section id="equations" className="h-minus-header">
             <h1 className="text-center text-3xl font-bold mb-2">Equations</h1>
             <div
                 id="previousArea"
-                className="bg-secondary container h-[calc(85vh-4rem)] flex flex-col gap-4 px-4 py-4 overflow-auto"
+                className="bg-secondary mx-auto container h-[calc(85vh-4rem)] flex flex-col gap-4 px-4 py-4 overflow-auto"
             >
                 {equations.map((equation, i) => (
                     <Equation
@@ -155,7 +155,7 @@ const EquationViewer = (props) => {
                     </button>
                 </span>
             </footer>
-        </div>
+        </section>
     );
 };
 

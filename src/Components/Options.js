@@ -4,7 +4,7 @@ import Toggle from './Toggle';
 const Options = (props) => {
     const { setEquations, setVars, varMode } = props;
     return (
-        <aside className="flex flex-col gap-8 mb-8">
+        <aside className="flex flex-col gap-8 pb-8">
             <div className="flex flex-col">
                 <h1 className="text-center text-3xl font-bold mt-4 mb-8">
                     Options
