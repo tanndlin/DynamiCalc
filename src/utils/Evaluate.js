@@ -1,6 +1,14 @@
 import Math from 'math-expression-evaluator';
 
-export const evaluate = ({ input, equations, vars, varMode, createNewVar }) => {
+export const evaluate = ({
+    input,
+    equations,
+    vars,
+    varMode,
+    createNewVar,
+    createToast,
+    removeToast
+}) => {
     try {
         input = `${input}`.replace(/ /g, '');
 
@@ -29,6 +37,16 @@ export const evaluate = ({ input, equations, vars, varMode, createNewVar }) => {
         input = replaceVars({ input, vars, varMode });
         return Math.eval(input);
     } catch (error) {
+        const id = createToast({
+            title: 'Error',
+            equation: input,
+            message: error.message
+        });
+
+        setTimeout(() => {
+            removeToast(id);
+        }, 5000);
+
         console.log(error);
         return 'ERROR';
     }

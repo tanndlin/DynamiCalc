@@ -5,7 +5,9 @@ import EquationViewer from './EquationViewer';
 import Options from './Options';
 import { evaluate } from '../utils/Evaluate';
 
-const MainContainer = () => {
+const MainContainer = (props) => {
+    const { createToast, removeToast } = props;
+
     const [equations, setEquations] = React.useState(
         JSON.parse(localStorage.getItem('equations')) || []
     );
@@ -58,7 +60,7 @@ const MainContainer = () => {
 
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
-            <div id="mainContainer" className="h-9/10">
+            <div id="mainContainer" className="min-h-9/10">
                 <VariableViewer
                     {...{
                         vars: vars[varMode],
@@ -69,7 +71,9 @@ const MainContainer = () => {
                                 equations,
                                 vars,
                                 varMode,
-                                createNewVar
+                                createNewVar,
+                                createToast,
+                                removeToast
                             }),
                         editVar,
                         deleteVar
@@ -83,7 +87,9 @@ const MainContainer = () => {
                         vars,
                         varMode,
                         setEquations,
-                        createNewVar
+                        createNewVar,
+                        createToast,
+                        removeToast
                     }}
                 />
                 <Options {...{ setEquations, setVars, varMode, setVarMode }} />
