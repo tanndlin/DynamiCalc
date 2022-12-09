@@ -137,16 +137,16 @@ button {
     background-color: none;
     height: min-content;
     font-weight: bold;
-}
 
-.editable:hover,
-.editable:focus {
-    color: black;
-    margin: 0;
-    background-color: #f5f5f5;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-weight: normal;
+    &:hover,
+    &:focus {
+        color: black;
+        margin: 0;
+        background-color: #f5f5f5;
+        border: 1px solid black;
+        border-radius: 5px;
+        font-weight: normal;
+    }
 }
 
 #fakeSpan {
