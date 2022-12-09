@@ -1,6 +1,6 @@
 import React from 'react';
 import HomePage from './Pages/HomePage';
-import './App.css';
+import './App.scss';
 import ToastProvider from './Components/ToastProvider';
 
 function App() {
