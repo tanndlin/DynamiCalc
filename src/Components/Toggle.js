@@ -15,9 +15,9 @@ const Toggle = (props) => {
                     setValue(!value);
                 }}
             >
-                <span
+                <button
                     className={`indicator indicator-${value} bg-tertiary rounded-full`}
-                ></span>
+                ></button>
             </div>
         </div>
     );
