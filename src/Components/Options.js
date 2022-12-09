@@ -9,7 +9,7 @@ const Options = (props) => {
                 <h1 className="text-center text-xl font-bold mb-8">Options</h1>
                 <span className="flex mx-auto gap-8">
                     <button
-                        className="bg-sky-900 rounded-md shadow-lg p-2"
+                        className="bg-tertiary rounded-md shadow-lg p-2"
                         onClick={() => {
                             setEquations([]);
                         }}
@@ -17,7 +17,7 @@ const Options = (props) => {
                         Clear Equations
                     </button>
                     <button
-                        className="bg-sky-900 rounded-md shadow-lg p-2"
+                        className="bg-tertiary rounded-md shadow-lg p-2"
                         onClick={() => {
                             setVars({});
                         }}

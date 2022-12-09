@@ -5,7 +5,7 @@ const Equation = (props) => {
 
     return (
         <div
-            className="equation relative block shadow-sky-900 hover:bg-sky-900 rounded-md shadow-md p-2 duration-500"
+            className="equation relative block shadow-tertiary hover:bg-tertiary rounded-md shadow-md p-2 duration-500"
             onClick={props.copy}
         >
             <input

@@ -12,7 +12,7 @@ const Variable = (props) => {
     };
 
     return (
-        <div className="variable relative bg-gray-800 rounded-md shadow-lg p-2">
+        <div className="variable relative bg-secondary rounded-md shadow-lg p-2">
             <input
                 className="close"
                 type="button"

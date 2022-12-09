@@ -10,13 +10,13 @@ const Toggle = (props) => {
                 <h2 className="mx-auto mb-4">{optionNames[value]}</h2>
             )}
             <div
-                className="mx-auto bg-gray-800 relative w-20 h-10 rounded-full"
+                className="mx-auto bg-secondary relative w-20 h-10 rounded-full"
                 onClick={() => {
                     setValue(!value);
                 }}
             >
                 <span
-                    className={`indicator indicator-${value} bg-sky-900 rounded-full`}
+                    className={`indicator indicator-${value} bg-tertiary rounded-full`}
                 ></span>
             </div>
         </div>

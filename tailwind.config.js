@@ -46,6 +46,16 @@ module.exports = {
                 '3/4screen': '75vh',
                 '8/10screen': '80vh',
                 '9/10screen': '90vh'
+            },
+            backgroundColor: {
+                primary: 'rgb(17 24 39)',
+                secondary: 'rgb(31 41 55)',
+                tertiary: 'rgb(12 74 110)'
+            },
+            boxShadowColor: {
+                primary: 'rgb(17 24 39)',
+                secondary: 'rgb(31 41 55)',
+                tertiary: 'rgb(12 74 110)'
             }
         }
     },

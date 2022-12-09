@@ -89,7 +89,7 @@
 }
 
 .variable:hover{
-  @apply bg-sky-900;
+  @apply bg-tertiary;
   max-height: 9999px;
 }
 

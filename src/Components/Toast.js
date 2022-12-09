@@ -5,7 +5,7 @@ const Toast = (props) => {
 
     const getClassName = () => {
         const defaultClassName =
-            'relative flex flex-col text-white bg-sky-900 bg-opacity-[.9] rounded-md p-4 shadow-lg w-max z-50';
+            'relative flex flex-col text-white bg-tertiary bg-opacity-[.9] rounded-md p-4 shadow-lg w-max z-50';
 
         return defaultClassName + (close ? ' toastClose' : '');
     };
