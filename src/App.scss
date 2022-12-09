@@ -1,3 +1,11 @@
+button {
+  @apply bg-tertiary rounded-md shadow-lg p-2;
+
+  &:hover {
+    @apply bg-tertiary-dark;
+  }
+}
+
 /* Scroll Bars */
 /* width */
 ::-webkit-scrollbar {

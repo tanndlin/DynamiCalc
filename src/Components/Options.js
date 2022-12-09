@@ -11,7 +11,6 @@ const Options = (props) => {
                 </h1>
                 <span className="flex mx-auto gap-8">
                     <button
-                        className="bg-tertiary rounded-md shadow-lg p-2"
                         onClick={() => {
                             setEquations([]);
                         }}
@@ -19,7 +18,6 @@ const Options = (props) => {
                         Clear Equations
                     </button>
                     <button
-                        className="bg-tertiary rounded-md shadow-lg p-2"
                         onClick={() => {
                             setVars({});
                         }}

@@ -150,10 +150,7 @@ const EquationViewer = (props) => {
                             handleKeyDown(e);
                         }}
                     />
-                    <button
-                        className="bg-tertiary rounded-md w-1/5 p-2"
-                        onClick={makeStatic}
-                    >
+                    <button className="w-1/5" onClick={makeStatic}>
                         Make Static
                     </button>
                 </span>

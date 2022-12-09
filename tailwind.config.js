@@ -50,7 +50,9 @@ module.exports = {
             backgroundColor: {
                 primary: 'rgb(17 24 39)',
                 secondary: 'rgb(31 41 55)',
-                tertiary: 'rgb(12 74 110)'
+                tertiary: 'rgb(12 74 110)',
+                'tertiary-dark': 'rgb(12 74 110 / 50%)',
+                'tertiary-light': 'rgb(42 104 140)'
             },
             boxShadowColor: {
                 primary: 'rgb(17 24 39)',
