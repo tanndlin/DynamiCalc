@@ -9,7 +9,7 @@ const EquationViewer = (props) => {
         vars,
         varMode,
         setEquations,
-        setVars
+        createNewVar
     } = props;
 
     let index = -1;
@@ -26,7 +26,7 @@ const EquationViewer = (props) => {
                 equations,
                 vars,
                 varMode,
-                setVars
+                createNewVar
             });
             setEquations([...equations, { input, output }]);
             e.target.value = '';
@@ -88,7 +88,7 @@ const EquationViewer = (props) => {
                 equations,
                 vars,
                 varMode,
-                setVars
+                createNewVar
             });
             return;
         }
@@ -100,7 +100,7 @@ const EquationViewer = (props) => {
             equations,
             vars,
             varMode,
-            setVars
+            createNewVar
         });
 
         inputField.value = `${currentVar}=${replaced}`;

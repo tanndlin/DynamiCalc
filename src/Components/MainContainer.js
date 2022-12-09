@@ -45,6 +45,17 @@ const MainContainer = () => {
         setVars({ ...vars });
     };
 
+    const createNewVar = (key, value) => {
+        vars[varMode][key] = { value, description: '' };
+        setVars({ ...vars });
+        return vars[varMode][key].value;
+    };
+
+    const editVar = (key, value) => {
+        vars[varMode][key] = value;
+        setVars({ ...vars });
+    };
+
     return (
         <main className="bg-gray-900 h-minus-header flex flex-col text-white">
             <div id="mainContainer" className="h-9/10">
@@ -58,8 +69,9 @@ const MainContainer = () => {
                                 equations,
                                 vars,
                                 varMode,
-                                setVars
+                                createNewVar
                             }),
+                        editVar,
                         deleteVar
                     }}
                 />
@@ -71,7 +83,7 @@ const MainContainer = () => {
                         vars,
                         varMode,
                         setEquations,
-                        setVars
+                        createNewVar
                     }}
                 />
                 <Options {...{ setEquations, setVars, varMode, setVarMode }} />

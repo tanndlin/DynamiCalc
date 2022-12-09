@@ -2,7 +2,7 @@ import React from 'react';
 import Variable from './Variable';
 
 const VariableViewer = (props) => {
-    const { vars, isStatic, evaluate, deleteVar } = props;
+    const { vars, isStatic, evaluate, deleteVar, editVar } = props;
 
     return (
         <section className="px-4 flex flex-col gap-4">
@@ -14,10 +14,11 @@ const VariableViewer = (props) => {
                         {...{
                             key,
                             name: key,
-                            value: vars[key],
+                            variable: vars[key],
                             isStatic,
                             evaluate,
-                            delete: () => deleteVar(key)
+                            delete: () => deleteVar(key),
+                            editVar: (value) => editVar(key, value)
                         }}
                     />
                 ))}

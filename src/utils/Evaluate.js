@@ -1,6 +1,6 @@
 import Math from 'math-expression-evaluator';
 
-export const evaluate = ({ input, equations, vars, varMode, setVars }) => {
+export const evaluate = ({ input, equations, vars, varMode, createNewVar }) => {
     try {
         input = `${input}`.replace(/ /g, '');
 
@@ -16,7 +16,14 @@ export const evaluate = ({ input, equations, vars, varMode, setVars }) => {
 
         if (input.includes('=') && input.indexOf('=') === 1) {
             const [key, value] = input.split('=');
-            return createVar({ key, value, equations, vars, varMode, setVars });
+            return createVar({
+                key,
+                value,
+                equations,
+                vars,
+                varMode,
+                createNewVar
+            });
         }
 
         input = replaceVars({ input, vars, varMode });
@@ -34,7 +41,7 @@ export const getVarMode = (varMode) => {
 export const replaceVars = ({ input, vars, varMode }) => {
     let newInput = input;
     for (const key in vars[varMode]) {
-        newInput = newInput.replace(key, `(${vars[varMode][key]})`);
+        newInput = newInput.replace(key, `(${vars[varMode][key].value})`);
     }
 
     // Recursively evaluate vars
@@ -51,17 +58,18 @@ export const assignStaticVar = ({
     equations,
     vars,
     varMode,
-    setVars
+    createNewVar
 }) => {
-    vars[varMode][key] = evaluate({
-        input: replaceVars({ input: value, vars, varMode }),
-        equations,
-        vars,
-        varMode,
-        setVars
-    });
-    setVars({ ...vars });
-    return vars[varMode][key];
+    return createNewVar(
+        key,
+        evaluate({
+            input: replaceVars({ input: value, vars, varMode }),
+            equations,
+            vars,
+            varMode,
+            createNewVar
+        })
+    );
 };
 
 export const createVar = ({
@@ -70,7 +78,7 @@ export const createVar = ({
     equations,
     vars,
     varMode,
-    setVars
+    createNewVar
 }) => {
     if (getVarMode(varMode) === 'static') {
         return assignStaticVar({
@@ -79,7 +87,7 @@ export const createVar = ({
             equations,
             vars,
             varMode,
-            setVars
+            createNewVar
         });
     }
 
@@ -88,10 +96,7 @@ export const createVar = ({
         throw new Error('This causes a circular reference');
     }
 
-    vars[varMode][key] = value;
-
-    setVars({ ...vars });
-    return vars[varMode][key];
+    return createNewVar(key, value);
 };
 
 export const causesCircularReference = ({ key, value, vars, varMode }) => {
@@ -102,7 +107,7 @@ export const causesCircularReference = ({ key, value, vars, varMode }) => {
 
     // Use BFS
     const newVars = { ...vars[varMode] };
-    newVars[key] = value;
+    newVars[key] = { value };
 
     const queue = [key];
     const visited = new Set();
@@ -111,7 +116,7 @@ export const causesCircularReference = ({ key, value, vars, varMode }) => {
         const current = queue.shift();
         visited.add(current);
 
-        const references = newVars[current].match(/[A-Z]/g);
+        const references = newVars[current].value.match(/[A-Z]/g);
         if (!references) {
             continue;
         }

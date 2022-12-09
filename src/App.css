@@ -66,13 +66,17 @@
 .variable{
   transition: 300ms;
   max-height: 40px;
-  height:9999px;
+  /* height:9999px; */
   overflow: hidden;
+}
+
+.variable textarea{
+  visibility: hidden;
 }
 
 .variable:hover{
   @apply bg-sky-900;
-  max-height: 60px;
+  max-height: 9999px;
 }
 
 .variable:hover .close{
@@ -84,9 +88,41 @@
   max-height: 20px;
 }
 
+.variable:hover textarea{
+  visibility: visible;
+}
+
 .padder{
   transition: 300ms;
   height:20px;
   max-height: 0;
   width: 100%;
+}
+
+.editable {
+    all: unset;
+    margin: 0;
+    padding: 0;
+    margin: 1px 0;
+    background-color: none;
+    width: 3ch;
+    height: min-content;
+    font-weight: bold;
+  }
+  
+  .editable:hover,
+  .editable:focus {
+  color:black;
+    margin: 0;
+    background-color: #f5f5f5;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-weight: normal;
+}
+
+#fakeSpan {
+    position: absolute;
+    left: -9999px;
+    display: inline-block;
+    min-width: 6em;
 }
