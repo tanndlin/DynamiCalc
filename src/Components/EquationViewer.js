@@ -110,7 +110,7 @@ const EquationViewer = (props) => {
         <div className="h-minus-header">
             <div
                 id="previousArea"
-                className="bg-gray-800 container h-[85vh] flex flex-col gap-4 px-4 py-4 overflow-auto"
+                className="bg-gray-800 container h-[calc(85vh-4rem)] flex flex-col gap-4 px-4 py-4 overflow-auto"
             >
                 {equations.map((equation, i) => (
                     <Equation
