@@ -2,6 +2,7 @@ import React from 'react';
 import HomePage from './Pages/HomePage';
 import './App.scss';
 import ToastProvider from './Components/ToastProvider';
+import Header from './Components/Header';
 
 function App() {
     const [toasts, setToasts] = React.useState([]);
@@ -33,8 +34,18 @@ function App() {
         }, 1000);
     };
 
+    window.onscroll = () => {
+        const currentTop = window.pageYOffset;
+        const headerHeight = document.getElementById('header').offsetHeight;
+
+        const toastProvider = document.getElementById('toastProvider');
+        const top = Math.max(0, headerHeight - currentTop) + 10;
+        toastProvider.style.top = `${top}px`;
+    };
+
     return (
-        <div className="relative">
+        <>
+            <Header />
             <ToastProvider toasts={toasts} />
             <HomePage
                 {...{
@@ -42,7 +53,7 @@ function App() {
                     removeToast
                 }}
             />
-        </div>
+        </>
     );
 }
 
