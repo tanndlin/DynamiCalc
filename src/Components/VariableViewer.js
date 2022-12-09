@@ -6,7 +6,7 @@ const VariableViewer = (props) => {
 
     return (
         <section className="px-4 flex flex-col gap-4">
-            <h1 className="text-center text-xl font-bold">Variables</h1>
+            <h1 className="text-center text-3xl font-bold">Variables</h1>
             {Object.keys(props.vars)
                 .sort()
                 .map((key) => (
