@@ -4,6 +4,7 @@ import VariableViewer from './VariableViewer';
 import EquationViewer from './EquationViewer';
 import Options from './Options';
 import { evaluate } from '../utils/Evaluate';
+import UnitConverter from './UnitConverter';
 
 const MainContainer = (props) => {
     const { createToast, removeToast } = props;
@@ -93,7 +94,12 @@ const MainContainer = (props) => {
                         removeToast
                     }}
                 />
-                <Options {...{ setEquations, setVars, varMode, setVarMode }} />
+                <aside>
+                    <Options
+                        {...{ setEquations, setVars, varMode, setVarMode }}
+                    />
+                    <UnitConverter />
+                </aside>
             </article>
         </main>
     );
