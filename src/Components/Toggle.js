@@ -10,7 +10,7 @@ const Toggle = (props) => {
                 <h2 className="mx-auto mb-4">{optionNames[value]}</h2>
             )}
             <div
-                className="mx-auto bg-secondary relative w-20 h-10 rounded-full"
+                className="mx-auto bg-secondary relative w-20 h-10 rounded-full border-2 border-tertiary"
                 onClick={() => {
                     setValue(!value);
                 }}

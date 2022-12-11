@@ -58,6 +58,11 @@ module.exports = {
                 primary: 'rgb(17 24 39)',
                 secondary: 'rgb(31 41 55)',
                 tertiary: 'rgb(12 74 110)'
+            },
+            borderColor: {
+                primary: 'rgb(17 24 39)',
+                secondary: 'rgb(31 41 55)',
+                tertiary: 'rgb(12 74 110)'
             }
         }
     },

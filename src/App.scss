@@ -71,11 +71,20 @@ button {
     bottom: 0;
     width: 50%;
     height: 100%;
+    right: 50%;
+
+    // Rounded on left, square on right
+    border-radius: 50% 0 0 50%;
 }
 
 .indicator-false {
     right: 0;
+
+    // Rounded on right, square on left
+    border-radius: 0 50% 50% 0;
 }
+
+
 
 .variable {
     transition: 300ms;
