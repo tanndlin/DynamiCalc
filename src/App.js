@@ -3,6 +3,8 @@ import HomePage from './Pages/HomePage';
 import './App.scss';
 import ToastProvider from './Components/ToastProvider';
 import Header from './Components/Header';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GraphPage from './Pages/GraphPage';
 
 function App() {
     const [toasts, setToasts] = React.useState([]);
@@ -43,27 +45,36 @@ function App() {
         toastProvider.style.top = `${top}px`;
     };
 
-    window.onmousemove = (e) => {
-        const container = document.getElementById('mainContainer');
-        const x = e.clientX;
-        const y = e.clientY;
-
-        // move background
-        container.style.backgroundPositionX = `${x / 50}px`;
-        container.style.backgroundPositionY = `${y / 50}px`;
-    };
-
     return (
-        <>
+        <BrowserRouter>
             <Header />
             <ToastProvider toasts={toasts} />
-            <HomePage
-                {...{
-                    createToast,
-                    removeToast
-                }}
-            />
-        </>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <HomePage
+                            {...{
+                                createToast,
+                                removeToast
+                            }}
+                        />
+                    }
+                />
+
+                <Route
+                    path="/graph"
+                    element={
+                        <GraphPage
+                            {...{
+                                createToast,
+                                removeToast
+                            }}
+                        />
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

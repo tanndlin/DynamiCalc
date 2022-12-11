@@ -59,6 +59,16 @@ const MainContainer = (props) => {
         setVars({ ...vars });
     };
 
+    window.onmousemove = (e) => {
+        const container = document.getElementById('mainContainer');
+        const x = e.clientX;
+        const y = e.clientY;
+
+        // move background
+        container.style.backgroundPositionX = `${x / 50}px`;
+        container.style.backgroundPositionY = `${y / 50}px`;
+    };
+
     return (
         <main className="bg-primary h-minus-header text-white">
             <article id="mainContainer" className="bg-primary min-h-9/10">
