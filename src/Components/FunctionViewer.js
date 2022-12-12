@@ -10,9 +10,15 @@ const FunctionViewer = (props) => {
     };
 
     return (
-        <div className="">
+        <div className="relative bg-secondary p-4 w-full">
             <input
-                className="text-black"
+                className="close"
+                type="button"
+                value="&times;"
+                onClick={props.delete}
+            />
+            <input
+                className="text-black w-9/10 px-2 py-1 rounded-md"
                 type="text"
                 value={fn.f}
                 onChange={onEdit}
