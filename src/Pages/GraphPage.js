@@ -5,15 +5,18 @@ import Graph from '../Components/Graph';
 const GraphPage = () => {
     const [width, setWidth] = React.useState(900);
     const [height, setHeight] = React.useState(500);
-    const [functions, setFunctions] = React.useState([
-        { f: 'sin(x) * x', color: 'black' },
-        { f: 'cos(x) * x', color: 'red' }
-    ]);
+    const [functions, setFunctions] = React.useState(
+        JSON.parse(localStorage.getItem('functions')) || []
+    );
 
     React.useEffect(() => {
         setWidth(window.innerWidth * 0.8);
         setHeight(window.innerHeight - 64);
     }, []);
+
+    React.useEffect(() => {
+        localStorage.setItem('functions', JSON.stringify(functions));
+    }, [functions]);
 
     window.onresize = () => {
         const container = document.getElementById('graphContainer');
