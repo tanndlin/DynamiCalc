@@ -1,41 +1,48 @@
 import React from 'react';
-import { CompactPicker } from 'react-color';
+import FunctionEditor from './FunctionEditor';
 
 const FunctionViewer = (props) => {
-    const { fn, edit } = props;
-    const { f, color } = fn;
+    const { functions, setFunctions } = props;
 
-    const onEdit = (e) => {
-        const newFn = { ...fn };
-        newFn.f = e.target.value;
-        edit(newFn);
+    const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple'];
+
+    const createNewFunction = () => {
+        const newFn = { f: '', color: colors[functions.length] };
+        setFunctions([...functions, newFn]);
     };
 
-    const editColor = (color) => {
-        const newFn = { ...fn };
-        newFn.color = color.hex;
-        edit(newFn);
+    const editFunction = (index, fn) => {
+        const newFunctions = [...functions];
+        newFunctions[index] = fn;
+        setFunctions(newFunctions);
+    };
+
+    const deleteFunction = (index) => {
+        setFunctions(functions.filter((_, i) => i !== index));
     };
 
     return (
-        <div className="relative function shadow-tertiary shadow-md p-4 w-full rounded-md flex flex-col gap-4">
-            <input
-                className="close"
-                type="button"
-                value="&times;"
-                onClick={props.delete}
-            />
-            <input
-                className="text-black w-9/10 px-2 py-1 rounded-md"
-                type="text"
-                value={f}
-                onChange={onEdit}
-            />
-
-            <footer className="picker">
-                <CompactPicker color={color} onChange={editColor} />
-            </footer>
-        </div>
+        <aside id="functionContainer" className="h-full w-2/10">
+            <section className="h-full flex flex-col justify-between">
+                <div className="flex flex-col gap-4 bg-secondary p-4 rounded-md">
+                    {functions.map((fn, i) => (
+                        <FunctionEditor
+                            key={i}
+                            fn={fn}
+                            edit={(f) => editFunction(i, f)}
+                            delete={() => {
+                                deleteFunction(i);
+                            }}
+                        />
+                    ))}
+                </div>
+                <footer className="mx-auto mb-4">
+                    <button onClick={createNewFunction} className="text-white">
+                        New Function
+                    </button>
+                </footer>
+            </section>
+        </aside>
     );
 };
 

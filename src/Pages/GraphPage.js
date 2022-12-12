@@ -1,5 +1,5 @@
 import React from 'react';
-import FunctionEditor from '../Components/FunctionEditor';
+import FunctionViewer from '../Components/FunctionViewer';
 import Graph from '../Components/Graph';
 
 const GraphPage = () => {
@@ -28,7 +28,7 @@ const GraphPage = () => {
             id="graphPageContainer"
             className="bg-primary w-full min-h-minus-header flex"
         >
-            <FunctionEditor functions={functions} setFunctions={setFunctions} />
+            <FunctionViewer functions={functions} setFunctions={setFunctions} />
             <div className="ml-auto w-8/10 h-full" id="graphContainer">
                 <Graph {...{ functions, setFunctions, width, height }} />
             </div>
