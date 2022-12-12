@@ -188,8 +188,24 @@ button {
 }
 
 .function {
+    max-height: 64px;
+    transition: 300ms;
+    height: 9999px;
+
+    .picker {
+        visibility: hidden;
+        transition: 300ms;
+        opacity: 0;
+    }
+
     &:hover {
         @apply bg-tertiary;
+        max-height: 80px;
+
+        .picker {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 }
 
