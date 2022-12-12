@@ -41,6 +41,12 @@ const Graph = (props) => {
                 for (let i = 0; i < width; i++) {
                     const x = (i - width / 2) / xScale;
                     const y = evaluate(f, x) * yScale;
+
+                    if (isNaN(y)) {
+                        ctx.stroke();
+                        ctx.beginPath();
+                    }
+
                     ctx.lineTo(i, height / 2 - y);
                 }
                 ctx.stroke();
