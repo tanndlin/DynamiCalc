@@ -34,7 +34,7 @@ module.exports = {
                 '1/4': '25%',
                 '1/5': '20%',
                 '9/10': '90%',
-                'minus-header': 'calc(100% - 4rem)',
+                'minus-header': 'calc(100vh - 4rem)',
                 500: '500px',
                 600: '600px',
                 700: '700px',

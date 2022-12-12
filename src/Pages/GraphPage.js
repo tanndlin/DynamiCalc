@@ -11,11 +11,8 @@ const GraphPage = () => {
     ]);
 
     React.useEffect(() => {
-        const container = document.getElementById('graphContainer');
-
-        const { width, height } = container.getBoundingClientRect();
-        setWidth(width);
-        setHeight(height);
+        setWidth(window.innerWidth * 0.8);
+        setHeight(window.innerHeight - 64);
     }, []);
 
     window.onresize = () => {
