@@ -190,7 +190,6 @@ button {
 .function {
     max-height: 64px;
     transition: 300ms;
-    height: 9999px;
 
     .picker {
         visibility: hidden;
@@ -200,7 +199,7 @@ button {
 
     &:hover {
         @apply bg-tertiary;
-        max-height: 80px;
+        max-height: 9999px;
 
         .picker {
             visibility: visible;

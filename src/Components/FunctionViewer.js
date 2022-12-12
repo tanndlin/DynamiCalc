@@ -18,7 +18,7 @@ const FunctionViewer = (props) => {
     };
 
     return (
-        <div className="relative function shadow-tertiary shadow-md p-4 w-full rounded-md flex flex-col">
+        <div className="relative function shadow-tertiary shadow-md p-4 w-full rounded-md flex flex-col gap-4">
             <input
                 className="close"
                 type="button"
