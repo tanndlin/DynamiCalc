@@ -186,3 +186,30 @@ button {
         margin-left: 50vw;
     }
 }
+
+.function {
+    &:hover {
+        @apply bg-tertiary;
+    }
+}
+
+@media (max-width: 1300px) {
+    #graphPageContainer {
+        display: block;
+        padding-bottom: 4rem;
+    }
+
+    #functionContainer {
+        @apply container mx-auto h-min py-8 rounded-md;
+
+        footer {
+            margin-top: 1rem;
+        }
+    }
+
+    #graphContainer {
+        @apply mx-auto;
+        width: 90vw;
+        height: 90vw;
+    }
+}

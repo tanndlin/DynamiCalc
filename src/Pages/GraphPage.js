@@ -27,7 +27,10 @@ const GraphPage = () => {
     };
 
     return (
-        <main className="bg-primary w-full h-minus-header flex">
+        <main
+            id="graphPageContainer"
+            className="bg-primary w-full min-h-minus-header flex"
+        >
             <FunctionEditor functions={functions} setFunctions={setFunctions} />
             <div className="ml-auto w-8/10 h-full" id="graphContainer">
                 <Graph {...{ functions, setFunctions, width, height }} />

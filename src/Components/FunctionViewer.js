@@ -10,7 +10,7 @@ const FunctionViewer = (props) => {
     };
 
     return (
-        <div className="relative bg-secondary p-4 w-full">
+        <div className="relative function shadow-tertiary shadow-md p-4 w-full rounded-md">
             <input
                 className="close"
                 type="button"

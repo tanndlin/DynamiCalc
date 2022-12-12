@@ -22,9 +22,9 @@ const FunctionEditor = (props) => {
     };
 
     return (
-        <aside className="h-full w-2/10">
+        <aside id="functionContainer" className="h-full w-2/10">
             <section className="h-full flex flex-col justify-between">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 bg-secondary p-4 rounded-md">
                     {functions.map((fn, i) => (
                         <FunctionViewer
                             key={i}
