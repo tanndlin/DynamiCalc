@@ -1,12 +1,13 @@
 import React from 'react';
+import FunctionEditor from '../Components/FunctionEditor';
 import Graph from '../Components/Graph';
 
 const GraphPage = () => {
     const [width, setWidth] = React.useState(900);
     const [height, setHeight] = React.useState(500);
-    const [functions, _setFunctions] = React.useState([
-        { f: (x) => Math.sin(x) * x, color: 'black' },
-        { f: (x) => Math.cos(x) * x, color: 'red' }
+    const [functions, setFunctions] = React.useState([
+        { f: 'sin(x) * x', color: 'black' },
+        { f: 'cos(x) * x', color: 'red' }
     ]);
 
     React.useEffect(() => {
@@ -26,9 +27,10 @@ const GraphPage = () => {
     };
 
     return (
-        <main className="bg-primary w-full h-minus-header">
+        <main className="bg-primary w-full h-minus-header flex">
+            <FunctionEditor functions={functions} setFunctions={setFunctions} />
             <div className="ml-auto w-8/10 h-full" id="graphContainer">
-                <Graph {...{ functions, width, height }} />
+                <Graph {...{ functions, setFunctions, width, height }} />
             </div>
         </main>
     );

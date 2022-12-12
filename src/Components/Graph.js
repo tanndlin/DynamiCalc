@@ -1,7 +1,16 @@
 import React from 'react';
+import Math from 'math-expression-evaluator';
 
 const Graph = (props) => {
     const { functions, width, height } = props;
+
+    const evaluate = (f, x) => {
+        // Convert to radians
+        const radians = f.replace(/(sin|cos|tan)\((.+)\)/g, '$1(180/3.14*$2)');
+        const withVars = radians.replace(/x/g, `(${x})`);
+
+        return Math.eval(withVars);
+    };
 
     const canvasRef = React.useRef(null);
     React.useEffect(() => {
@@ -14,6 +23,7 @@ const Graph = (props) => {
         const xScale = 100;
         const yScale = 100;
 
+        ctx.strokeStyle = 'black';
         ctx.beginPath();
         ctx.moveTo(0, height / 2);
         ctx.lineTo(width, height / 2);
@@ -22,17 +32,21 @@ const Graph = (props) => {
         ctx.stroke();
 
         functions.forEach((fn) => {
-            const { f, color } = fn;
-            ctx.strokeStyle = color;
+            try {
+                const { f, color } = fn;
+                ctx.strokeStyle = color;
 
-            ctx.beginPath();
-            ctx.moveTo(0, height / 2);
-            for (let x = 0; x < width; x++) {
-                const i = x - width / 2;
-                const y = f(i / xScale) * yScale;
-                ctx.lineTo(x, height / 2 - y);
+                ctx.beginPath();
+                ctx.moveTo(0, evaluate(f, 0) * yScale);
+                for (let i = 0; i < width; i++) {
+                    const x = (i - width / 2) / xScale;
+                    const y = evaluate(f, x) * yScale;
+                    ctx.lineTo(i, height / 2 - y);
+                }
+                ctx.stroke();
+            } catch (error) {
+                console.log(error);
             }
-            ctx.stroke();
         });
     }, [width, height, functions]);
 
