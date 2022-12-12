@@ -24,43 +24,39 @@ const Graph = (props) => {
         ctx.lineTo(width / 2, height);
         ctx.stroke();
 
-        // Draw ticks
-        ctx.beginPath();
-        for (let i = 0; i < width; i += xScale) {
-            ctx.moveTo(i, height / 2 - 5);
-            ctx.lineTo(i, height / 2 + 5);
-        }
-        for (let i = 0; i < height; i += yScale) {
-            ctx.moveTo(width / 2 - 5, i);
-            ctx.lineTo(width / 2 + 5, i);
-        }
-        ctx.stroke();
-
         // Draw labels
         ctx.fillStyle = 'black';
         ctx.font = '15px Arial';
 
         // Draw 0
         ctx.fillText('0', width / 2 + 5, height / 2 + 20);
-
+        ctx.beginPath();
         // Right
         for (let i = width / 2 + xScale; i < width; i += xScale) {
-            ctx.fillText((i - width / 2) / xScale, i + 16, height / 2 + 20);
+            ctx.fillText((i - width / 2) / xScale, i, height / 2 + 20);
+            ctx.moveTo(i, height / 2 - 5);
+            ctx.lineTo(i, height / 2 + 5);
         }
 
         // Left
         for (let i = width / 2 - xScale; i > 0; i -= xScale) {
-            ctx.fillText((i - width / 2) / xScale, i + 12, height / 2 + 20);
+            ctx.fillText((i - width / 2) / xScale, i, height / 2 + 20);
+            ctx.moveTo(i, height / 2 - 5);
+            ctx.lineTo(i, height / 2 + 5);
         }
 
         // Down
         for (let i = height / 2 + yScale; i < height; i += yScale) {
             ctx.fillText((height / 2 - i) / yScale, width / 2 - 20, i + 3);
+            ctx.moveTo(width / 2 - 5, i);
+            ctx.lineTo(width / 2 + 5, i);
         }
 
         // Up
         for (let i = height / 2 - yScale; i > 0; i -= yScale) {
             ctx.fillText((height / 2 - i) / yScale, width / 2 - 20, i + 3);
+            ctx.moveTo(width / 2 - 5, i);
+            ctx.lineTo(width / 2 + 5, i);
         }
 
         ctx.stroke();
