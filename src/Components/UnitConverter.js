@@ -9,9 +9,7 @@ const UnitConverter = () => {
 
     const convert = (value, toUnit) => {
         try {
-            // Get alphabet characters from string
-            const intValue = value.replace(/[a-zA-Z]/g, '');
-            const fromUnit = value.replace(intValue, '');
+            const { intValue, unit: fromUnit } = getValueAndUnit(value);
 
             if (!toUnit || toUnit === 'Best') {
                 const { val, unit } = Converter(intValue)
@@ -28,13 +26,21 @@ const UnitConverter = () => {
 
     const getPossibleUnits = (value) => {
         try {
-            const fromUnit = value.replace(/[0-9]/g, '');
-            return ['Best', ...Converter().from(fromUnit).possibilities()];
+            const { unit } = getValueAndUnit(value);
+            return ['Best', ...Converter().from(unit).possibilities()];
         } catch {
             return [];
         }
     };
 
+    const getValueAndUnit = (value) => {
+        // Find the first letter
+        const firstLetter = value.search(/[a-zA-Z]/);
+        const intValue = value.substring(0, firstLetter);
+        const unit = value.substring(firstLetter);
+
+        return { intValue, unit };
+    };
     return (
         <div className="flex flex-col gap-8 pb-8 px-8">
             <h1 className="text-center text-3xl font-bold mt-4 mb-8">
