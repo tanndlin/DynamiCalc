@@ -23,7 +23,7 @@ export const evaluate = ({
             input = input.replace('ans', lastOutput);
         }
 
-        if (input.includes('=') && input.indexOf('=') === 1) {
+        if (input.includes('=')) {
             const [key, value] = input.split('=');
             return createVar({
                 key,
@@ -63,9 +63,17 @@ export const getVarMode = (varMode) => {
 
 export const replaceVars = ({ input, vars, varMode }) => {
     let newInput = input;
-    for (const key in vars[varMode]) {
+    // Do the largest lenght named vars first
+    // This is to prevent replacing a substring of a var
+
+    // Sort vars by length
+    const sortedVars = Object.keys(vars[varMode]).sort((a, b) => {
+        return b.length - a.length;
+    });
+
+    sortedVars.forEach((key) => {
         newInput = newInput.replace(key, `(${vars[varMode][key].value})`);
-    }
+    });
 
     // Recursively evaluate vars
     if (newInput !== input) {
