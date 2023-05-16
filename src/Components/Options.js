@@ -9,7 +9,7 @@ const Options = (props) => {
                 <h1 className="text-center text-3xl font-bold mt-4 mb-8">
                     Options
                 </h1>
-                <span className="flex mx-auto gap-8">
+                <span className="buttonContainer">
                     <button
                         onClick={() => {
                             setEquations([]);
