@@ -104,6 +104,8 @@ button {
     max-height: 40px;
     /* height:9999px; */
     overflow: hidden;
+    background-color: rgba(12, 74, 110, .05);
+    backdrop-filter: blur(1px);
 
     .editableContainer {
         visibility: hidden;
@@ -113,7 +115,7 @@ button {
     }
 
     &:hover {
-        @apply bg-sky-900;
+        background-color: rgba(12, 74, 110);
         max-height: 9999px;
 
         .padder {
