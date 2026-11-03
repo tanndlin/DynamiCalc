@@ -9,8 +9,8 @@ const ToastProvider = (props) => {
             id="toastProvider"
             className="fixed top-0 left-[1rem] grid grid-flow-row gap-4 z-50"
         >
-            {toasts.map((toast, index) => (
-                <Toast key={index} toast={toast} />
+            {toasts.map((toast) => (
+                <Toast key={toast.id} toast={toast} />
             ))}
         </nav>
     );

@@ -10,9 +10,11 @@ const MainContainer = (props) => {
     const [equations, setEquations] = React.useState(
         JSON.parse(localStorage.getItem('equations')) || []
     );
-    const [vars, setVars] = React.useState(
-        JSON.parse(localStorage.getItem('vars')) ?? { true: {}, false: {} }
-    );
+    const [vars, setVars] = React.useState(() => ({
+        true: {},
+        false: {},
+        ...JSON.parse(localStorage.getItem('vars'))
+    }));
 
     const [varMode, setVarMode] = React.useState(
         JSON.parse(localStorage.getItem('varMode')) ?? false

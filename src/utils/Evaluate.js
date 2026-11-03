@@ -20,7 +20,7 @@ export const evaluate = ({
                 throw new Error('No previous answer');
             }
 
-            input = input.replace('ans', lastOutput);
+            input = input.replaceAll('ans', `(${lastOutput})`);
         }
 
         if (input.includes('=')) {

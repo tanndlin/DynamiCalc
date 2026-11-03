@@ -10,6 +10,24 @@ describe('evaluate', () => {
         );
     });
 
+    it('should replace every "ans" with previous answer', () => {
+        const vars = { false: {}, true: {} };
+        const varMode = false;
+        const equations = [{ input: '1 + 2', output: 3 }];
+        expect(evaluate({ input: 'ans * ans', equations, vars, varMode })).toBe(
+            9
+        );
+    });
+
+    it('should treat a negative previous answer as one value', () => {
+        const vars = { false: {}, true: {} };
+        const varMode = false;
+        const equations = [{ input: '0 - 2', output: -2 }];
+        expect(evaluate({ input: 'ans ^ 2', equations, vars, varMode })).toBe(
+            4
+        );
+    });
+
     it('should evaluate expressions with variables', () => {
         const equations = [];
         const vars = { false: { x: { value: 2 }, y: { value: 3 } }, true: {} };

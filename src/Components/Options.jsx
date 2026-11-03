@@ -19,7 +19,7 @@ const Options = (props) => {
                     </button>
                     <button
                         onClick={() => {
-                            setVars({});
+                            setVars({ true: {}, false: {} });
                         }}
                     >
                         Clear Variables

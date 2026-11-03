@@ -9,26 +9,16 @@ import GraphPage from './Pages/GraphPage';
 function App() {
     const [toasts, setToasts] = React.useState([]);
 
-    let id = 0;
+    const nextToastId = React.useRef(0);
     const createToast = (toast) => {
-        const newToast = {
-            ...toast,
-            id: id++
-        };
-
-        setToasts([...toasts, newToast]);
-        return newToast.id;
+        const id = nextToastId.current++;
+        setToasts((toasts) => [...toasts, { ...toast, id }]);
+        return id;
     };
 
     const removeToast = (id) => {
         setToasts((toasts) =>
-            toasts.map((t) => {
-                if (t.id === id) {
-                    t.close = true;
-                }
-
-                return t;
-            })
+            toasts.map((t) => (t.id === id ? { ...t, close: true } : t))
         );
 
         setTimeout(() => {
