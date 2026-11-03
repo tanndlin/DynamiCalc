@@ -1,12 +1,14 @@
 import React from 'react';
 import FunctionViewer from '../Components/FunctionViewer';
 import Graph from '../Components/Graph';
+import type { GraphFunction } from '../types';
+import { loadJSON } from '../utils/storage';
 
 const GraphPage = () => {
     const [width, setWidth] = React.useState(900);
     const [height, setHeight] = React.useState(500);
-    const [functions, setFunctions] = React.useState(
-        JSON.parse(localStorage.getItem('functions')) || []
+    const [functions, setFunctions] = React.useState<GraphFunction[]>(() =>
+        loadJSON<GraphFunction[]>('functions', [])
     );
 
     React.useEffect(() => {
@@ -20,6 +22,9 @@ const GraphPage = () => {
 
     window.onresize = () => {
         const container = document.getElementById('graphContainer');
+        if (!container) {
+            return;
+        }
 
         const { width, height } = container.getBoundingClientRect();
         setWidth(width);
@@ -33,7 +38,7 @@ const GraphPage = () => {
         >
             <FunctionViewer functions={functions} setFunctions={setFunctions} />
             <div className="ml-auto w-8/10 h-full" id="graphContainer">
-                <Graph {...{ functions, setFunctions, width, height }} />
+                <Graph {...{ functions, width, height }} />
             </div>
         </main>
     );

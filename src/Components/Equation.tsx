@@ -1,6 +1,13 @@
 import React from 'react';
+import type { Equation as EquationData } from '../types';
 
-const Equation = (props) => {
+interface EquationProps {
+    equation: EquationData;
+    copy: (e: React.MouseEvent<HTMLDivElement>) => void;
+    delete: () => void;
+}
+
+const Equation = (props: EquationProps) => {
     const { equation } = props;
 
     return (

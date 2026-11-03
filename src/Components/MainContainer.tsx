@@ -2,22 +2,29 @@ import React from 'react';
 import VariableViewer from './VariableViewer';
 import EquationViewer from './EquationViewer';
 import Options from './Options';
-import { evaluate } from '../utils/Evaluate';
+import { evaluate, getScope } from '../utils/Evaluate';
+import { loadJSON } from '../utils/storage';
+import type {
+    Equation,
+    ToastProps,
+    VarMode,
+    Variable,
+    VariableScope,
+    Vars
+} from '../types';
 
-const MainContainer = (props) => {
-    const { createToast, removeToast } = props;
-
-    const [equations, setEquations] = React.useState(
-        JSON.parse(localStorage.getItem('equations')) || []
+const MainContainer = ({ createToast, removeToast }: ToastProps) => {
+    const [equations, setEquations] = React.useState<Equation[]>(() =>
+        loadJSON<Equation[]>('equations', [])
     );
-    const [vars, setVars] = React.useState(() => ({
+    const [vars, setVars] = React.useState<Vars>(() => ({
         true: {},
         false: {},
-        ...JSON.parse(localStorage.getItem('vars'))
+        ...loadJSON<Partial<Vars>>('vars', {})
     }));
 
-    const [varMode, setVarMode] = React.useState(
-        JSON.parse(localStorage.getItem('varMode')) ?? false
+    const [varMode, setVarMode] = React.useState<VarMode>(() =>
+        loadJSON<VarMode>('varMode', false)
     );
 
     React.useEffect(() => {
@@ -32,41 +39,50 @@ const MainContainer = (props) => {
         localStorage.setItem('varMode', JSON.stringify(varMode));
     }, [varMode]);
 
-    const setEquationInputter = (value) => {
-        const inputField = document.getElementById('equationInputter');
+    const scope: VariableScope = getScope(vars, varMode);
+
+    const setEquationInputter = (value: string) => {
+        const inputField = document.getElementById(
+            'equationInputter'
+        ) as HTMLInputElement | null;
+        if (!inputField) {
+            return;
+        }
+
         inputField.value = value;
         inputField.focus();
     };
 
-    const deleteEquation = (index) => {
+    const deleteEquation = (index: number) => {
         equations.splice(index, 1);
         setEquations([...equations]);
     };
 
-    const deleteVar = (key) => {
-        delete vars[varMode][key];
+    const deleteVar = (key: string) => {
+        delete scope[key];
         setVars({ ...vars });
     };
 
-    const createNewVar = (key, value) => {
-        vars[varMode][key] = { value, description: '' };
+    const createNewVar = (key: string, value: string | number) => {
+        scope[key] = { value, description: '' };
         setVars({ ...vars });
-        return vars[varMode][key].value;
+        return scope[key].value;
     };
 
-    const editVar = (key, value) => {
-        vars[varMode][key] = value;
+    const editVar = (key: string, value: Variable) => {
+        scope[key] = value;
         setVars({ ...vars });
     };
 
     window.onmousemove = (e) => {
         const container = document.getElementById('mainContainer');
-        const x = e.clientX;
-        const y = e.clientY;
+        if (!container) {
+            return;
+        }
 
         // move background
-        container.style.backgroundPositionX = `${x / 50}px`;
-        container.style.backgroundPositionY = `${y / 50}px`;
+        container.style.backgroundPositionX = `${e.clientX / 50}px`;
+        container.style.backgroundPositionY = `${e.clientY / 50}px`;
     };
 
     return (
@@ -74,7 +90,7 @@ const MainContainer = (props) => {
             <article id="mainContainer" className="bg-primary min-h-9/10">
                 <VariableViewer
                     {...{
-                        vars: vars[varMode],
+                        vars: scope,
                         isStatic: varMode,
                         evaluate: (input) =>
                             evaluate({

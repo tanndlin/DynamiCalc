@@ -1,18 +1,20 @@
 import React, { act } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, type Root } from 'react-dom/client';
 import App from '../App';
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+(
+    globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT: boolean }
+).IS_REACT_ACT_ENVIRONMENT = true;
 
-let root;
+let root: Root;
 
 const render = async () => {
     document.body.innerHTML = '<div id="root"></div>';
-    root = createRoot(document.getElementById('root'));
+    root = createRoot(document.getElementById('root')!);
     await act(async () => root.render(<App />));
 };
 
-const getButton = (text) =>
+const getButton = (text: string) =>
     [...document.querySelectorAll('button')].find(
         (b) => b.textContent === text
     );
@@ -27,8 +29,10 @@ afterEach(async () => {
 });
 
 describe('Toasts', () => {
-    const enterEquation = async (value) => {
-        const input = document.getElementById('equationInputter');
+    const enterEquation = async (value: string) => {
+        const input = document.getElementById(
+            'equationInputter'
+        ) as HTMLInputElement;
         input.value = value;
         await act(async () =>
             input.dispatchEvent(
@@ -38,7 +42,7 @@ describe('Toasts', () => {
     };
 
     const toastCount = () =>
-        document.getElementById('toastProvider').children.length;
+        document.getElementById('toastProvider')!.children.length;
 
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());
@@ -72,11 +76,11 @@ describe('Clear Variables', () => {
         await render();
         expect(document.body.textContent).toContain('A=');
 
-        await act(async () => getButton('Clear Variables').click());
+        await act(async () => getButton('Clear Variables')!.click());
 
         expect(document.body.textContent).toContain('Variables');
         expect(document.body.textContent).not.toContain('A=');
-        expect(JSON.parse(localStorage.getItem('vars'))).toEqual({
+        expect(JSON.parse(localStorage.getItem('vars')!)).toEqual({
             true: {},
             false: {}
         });

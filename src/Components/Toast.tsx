@@ -1,6 +1,7 @@
 import React from 'react';
+import type { Toast as ToastData } from '../types';
 
-const Toast = (props) => {
+const Toast = (props: { toast: ToastData }) => {
     const { title, equation, message, close } = props.toast;
 
     const getClassName = () => {

@@ -1,8 +1,25 @@
 import React from 'react';
 import Equation from './Equation';
 import { evaluate as ev } from '../utils/Evaluate';
+import type { CreateNewVar } from '../utils/Evaluate';
+import type {
+    Equation as EquationData,
+    ToastProps,
+    VarMode,
+    Vars
+} from '../types';
 
-const EquationViewer = (props) => {
+interface EquationViewerProps extends ToastProps {
+    equations: EquationData[];
+    setEquationInputter: (value: string) => void;
+    deleteEquation: (index: number) => void;
+    vars: Vars;
+    varMode: VarMode;
+    setEquations: (equations: EquationData[]) => void;
+    createNewVar: CreateNewVar;
+}
+
+const EquationViewer = (props: EquationViewerProps) => {
     const {
         equations,
         setEquationInputter,
@@ -14,7 +31,7 @@ const EquationViewer = (props) => {
         removeToast
     } = props;
 
-    const evaluate = (input) => {
+    const evaluate = (input: string) => {
         return ev({
             input,
             equations,
@@ -28,21 +45,22 @@ const EquationViewer = (props) => {
     };
 
     let index = -1;
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const target = e.currentTarget;
         if (e.key === 'Enter') {
             // If the input is empty, run last equation
-            if (e.target.value.length === 0) {
-                e.target.value = equations[equations.length - 1].input;
+            if (target.value.length === 0) {
+                target.value = equations[equations.length - 1].input;
             }
 
-            const input = e.target.value;
+            const input = target.value;
             const output = evaluate(input);
             setEquations([...equations, { input, output }]);
-            e.target.value = '';
+            target.value = '';
 
             // Scroll to bottom of previousArea
             setTimeout(() => {
-                const previousArea = document.getElementById('previousArea');
+                const previousArea = document.getElementById('previousArea')!;
                 previousArea.scrollTop = previousArea.scrollHeight;
             }, 100);
         }
@@ -51,48 +69,47 @@ const EquationViewer = (props) => {
             e.preventDefault();
             if (index === -1) {
                 index = equations.length - 1;
-                e.target.value = equations[index].input;
+                target.value = equations[index].input;
             } else if (index > 0) {
                 index--;
-                e.target.value = equations[index].input;
+                target.value = equations[index].input;
             } else {
                 index = -1;
-                e.target.value = '';
+                target.value = '';
             }
             // Put cursor at the end of the input
-            e.target.selectionStart = e.target.value.length;
+            target.selectionStart = target.value.length;
         }
 
         if (e.key === 'ArrowDown') {
             e.preventDefault();
             if (index === -1) {
                 index = 0;
-                e.target.value = equations[index].input;
+                target.value = equations[index].input;
             } else if (index < equations.length - 1) {
                 index++;
-                e.target.value = equations[index].input;
+                target.value = equations[index].input;
             } else {
                 index = -1;
-                e.target.value = '';
+                target.value = '';
             }
             // Put cursor at the end of the input
-            e.target.selectionStart = e.target.value.length;
+            target.selectionStart = target.value.length;
         }
 
-        if (
-            ['-', '+', '*', '/'].includes(e.key) &&
-            e.target.value.length === 0
-        ) {
+        if (['-', '+', '*', '/'].includes(e.key) && target.value.length === 0) {
             e.preventDefault();
             // Put answer in front of operator
-            e.target.value = `ans${e.key}`;
+            target.value = `ans${e.key}`;
         }
     };
 
     const makeStatic = () => {
-        const inputField = document.getElementById('equationInputter');
+        const inputField = document.getElementById(
+            'equationInputter'
+        ) as HTMLInputElement;
         if (!inputField.value.includes('=')) {
-            inputField.value = evaluate(inputField.value);
+            inputField.value = `${evaluate(inputField.value)}`;
             return;
         }
 
@@ -105,7 +122,7 @@ const EquationViewer = (props) => {
 
     React.useEffect(() => {
         // Scroll to bottom of previousArea
-        const previousArea = document.getElementById('previousArea');
+        const previousArea = document.getElementById('previousArea')!;
         previousArea.scrollTop = previousArea.scrollHeight;
     }, []);
 
@@ -126,7 +143,10 @@ const EquationViewer = (props) => {
                                 props.deleteEquation(i);
                             },
                             copy: (e) => {
-                                if (e.target.className !== 'close') {
+                                if (
+                                    (e.target as HTMLElement).className !==
+                                    'close'
+                                ) {
                                     props.setEquationInputter(equation.input);
                                 }
                             }

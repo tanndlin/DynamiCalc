@@ -1,7 +1,13 @@
 import React from 'react';
 import FunctionEditor from './FunctionEditor';
+import type { GraphFunction } from '../types';
 
-const FunctionViewer = (props) => {
+interface FunctionViewerProps {
+    functions: GraphFunction[];
+    setFunctions: (functions: GraphFunction[]) => void;
+}
+
+const FunctionViewer = (props: FunctionViewerProps) => {
     const { functions, setFunctions } = props;
 
     const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple'];
@@ -11,13 +17,13 @@ const FunctionViewer = (props) => {
         setFunctions([...functions, newFn]);
     };
 
-    const editFunction = (index, fn) => {
+    const editFunction = (index: number, fn: GraphFunction) => {
         const newFunctions = [...functions];
         newFunctions[index] = fn;
         setFunctions(newFunctions);
     };
 
-    const deleteFunction = (index) => {
+    const deleteFunction = (index: number) => {
         setFunctions(functions.filter((_, i) => i !== index));
     };
 

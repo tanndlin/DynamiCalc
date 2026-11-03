@@ -1,13 +1,27 @@
 import React from 'react';
 import Variable from './Variable';
+import type { Result } from '../utils/Evaluate';
+import type { Variable as VariableData, VariableScope } from '../types';
 
-const VariableViewer = (props) => {
-    const { vars, isStatic, evaluate, deleteVar, editVar } = props;
+interface VariableViewerProps {
+    vars: VariableScope;
+    isStatic: boolean;
+    evaluate: (input: string | number) => Result;
+    deleteVar: (key: string) => void;
+    editVar: (key: string, value: VariableData) => void;
+}
 
+const VariableViewer = ({
+    vars,
+    isStatic,
+    evaluate,
+    deleteVar,
+    editVar
+}: VariableViewerProps) => {
     return (
         <section id="variables" className="px-4 flex flex-col gap-4">
             <h1 className="text-center text-3xl font-bold">Variables</h1>
-            {Object.keys(props.vars)
+            {Object.keys(vars)
                 .sort()
                 .map((key) => (
                     <Variable
@@ -18,7 +32,8 @@ const VariableViewer = (props) => {
                             isStatic,
                             evaluate,
                             delete: () => deleteVar(key),
-                            editVar: (value) => editVar(key, value)
+                            editVar: (value: VariableData) =>
+                                editVar(key, value)
                         }}
                     />
                 ))}

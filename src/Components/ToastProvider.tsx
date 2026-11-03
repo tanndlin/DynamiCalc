@@ -1,7 +1,8 @@
 import React from 'react';
 import Toast from './Toast';
+import type { Toast as ToastData } from '../types';
 
-const ToastProvider = (props) => {
+const ToastProvider = (props: { toasts: ToastData[] }) => {
     const { toasts } = props;
 
     return (

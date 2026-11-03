@@ -1,8 +1,9 @@
 import { evaluate } from '../utils/Evaluate';
+import type { Equation, Vars } from '../types';
 
 describe('evaluate', () => {
     it('should replace "ans" with previous answer', () => {
-        const vars = { false: {}, true: {} };
+        const vars: Vars = { false: {}, true: {} };
         const varMode = false;
         const equations = [{ input: '2 + 2', output: 4 }];
         expect(evaluate({ input: 'ans * 3', equations, vars, varMode })).toBe(
@@ -11,7 +12,7 @@ describe('evaluate', () => {
     });
 
     it('should replace every "ans" with previous answer', () => {
-        const vars = { false: {}, true: {} };
+        const vars: Vars = { false: {}, true: {} };
         const varMode = false;
         const equations = [{ input: '1 + 2', output: 3 }];
         expect(evaluate({ input: 'ans * ans', equations, vars, varMode })).toBe(
@@ -20,7 +21,7 @@ describe('evaluate', () => {
     });
 
     it('should treat a negative previous answer as one value', () => {
-        const vars = { false: {}, true: {} };
+        const vars: Vars = { false: {}, true: {} };
         const varMode = false;
         const equations = [{ input: '0 - 2', output: -2 }];
         expect(evaluate({ input: 'ans ^ 2', equations, vars, varMode })).toBe(
@@ -29,8 +30,11 @@ describe('evaluate', () => {
     });
 
     it('should evaluate expressions with variables', () => {
-        const equations = [];
-        const vars = { false: { x: { value: 2 }, y: { value: 3 } }, true: {} };
+        const equations: Equation[] = [];
+        const vars: Vars = {
+            false: { x: { value: 2 }, y: { value: 3 } },
+            true: {}
+        };
         const varMode = false;
         expect(evaluate({ input: 'x + y', equations, vars, varMode })).toBe(5);
         expect(evaluate({ input: 'x * y', equations, vars, varMode })).toBe(6);
@@ -41,8 +45,8 @@ describe('evaluate', () => {
     });
 
     it('should evaluate basic arithmetic expressions', () => {
-        const equations = [];
-        const vars = { false: {}, true: {} };
+        const equations: Equation[] = [];
+        const vars: Vars = { false: {}, true: {} };
         const varMode = false;
         expect(evaluate({ input: '2 + 2', equations, vars, varMode })).toBe(4);
         expect(evaluate({ input: '2 * 3', equations, vars, varMode })).toBe(6);
@@ -51,8 +55,8 @@ describe('evaluate', () => {
     });
 
     it('should return "ERROR" for invalid input', () => {
-        const equations = [];
-        const vars = {};
+        const equations: Equation[] = [];
+        const vars: Vars = { false: {}, true: {} };
         const varMode = false;
         expect(evaluate({ input: '2 +', equations, vars, varMode })).toContain(
             'ERROR'

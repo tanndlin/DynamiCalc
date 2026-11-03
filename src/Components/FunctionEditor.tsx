@@ -1,17 +1,25 @@
 import React from 'react';
 import { CompactPicker } from 'react-color';
+import type { ColorResult } from 'react-color';
+import type { GraphFunction } from '../types';
 
-const FunctionEditor = (props) => {
+interface FunctionEditorProps {
+    fn: GraphFunction;
+    edit: (fn: GraphFunction) => void;
+    delete: () => void;
+}
+
+const FunctionEditor = (props: FunctionEditorProps) => {
     const { fn, edit } = props;
     const { f, color } = fn;
 
-    const onEdit = (e) => {
+    const onEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFn = { ...fn };
         newFn.f = e.target.value;
         edit(newFn);
     };
 
-    const editColor = (color) => {
+    const editColor = (color: ColorResult) => {
         const newFn = { ...fn };
         newFn.color = color.hex;
         edit(newFn);

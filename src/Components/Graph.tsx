@@ -1,10 +1,17 @@
 import React from 'react';
 import Math from 'math-expression-evaluator';
+import type { GraphFunction } from '../types';
 
-const Graph = (props) => {
+interface GraphProps {
+    functions: GraphFunction[];
+    width: number;
+    height: number;
+}
+
+const Graph = (props: GraphProps) => {
     const { functions, width, height } = props;
 
-    const evaluate = (f, x) => {
+    const evaluate = (f: string, x: number) => {
         // Convert to radians
         const radians = f.replace(/(sin|cos|tan)\((.+)\)/g, '$1(180/3.14*$2)');
         const withVars = radians.replace(/x/g, `(${x})`);
@@ -12,7 +19,11 @@ const Graph = (props) => {
         return Math.eval(withVars);
     };
 
-    const drawAxes = (ctx, xScale, yScale) => {
+    const drawAxes = (
+        ctx: CanvasRenderingContext2D,
+        xScale: number,
+        yScale: number
+    ) => {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, width, height);
 
@@ -33,28 +44,28 @@ const Graph = (props) => {
         ctx.beginPath();
         // Right
         for (let i = width / 2 + xScale; i < width; i += xScale) {
-            ctx.fillText((i - width / 2) / xScale, i, height / 2 + 20);
+            ctx.fillText(`${(i - width / 2) / xScale}`, i, height / 2 + 20);
             ctx.moveTo(i, height / 2 - 5);
             ctx.lineTo(i, height / 2 + 5);
         }
 
         // Left
         for (let i = width / 2 - xScale; i > 0; i -= xScale) {
-            ctx.fillText((i - width / 2) / xScale, i, height / 2 + 20);
+            ctx.fillText(`${(i - width / 2) / xScale}`, i, height / 2 + 20);
             ctx.moveTo(i, height / 2 - 5);
             ctx.lineTo(i, height / 2 + 5);
         }
 
         // Down
         for (let i = height / 2 + yScale; i < height; i += yScale) {
-            ctx.fillText((height / 2 - i) / yScale, width / 2 - 20, i + 3);
+            ctx.fillText(`${(height / 2 - i) / yScale}`, width / 2 - 20, i + 3);
             ctx.moveTo(width / 2 - 5, i);
             ctx.lineTo(width / 2 + 5, i);
         }
 
         // Up
         for (let i = height / 2 - yScale; i > 0; i -= yScale) {
-            ctx.fillText((height / 2 - i) / yScale, width / 2 - 20, i + 3);
+            ctx.fillText(`${(height / 2 - i) / yScale}`, width / 2 - 20, i + 3);
             ctx.moveTo(width / 2 - 5, i);
             ctx.lineTo(width / 2 + 5, i);
         }
@@ -62,10 +73,13 @@ const Graph = (props) => {
         ctx.stroke();
     };
 
-    const canvasRef = React.useRef(null);
+    const canvasRef = React.useRef<HTMLCanvasElement>(null);
     React.useEffect(() => {
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas?.getContext('2d');
+        if (!ctx) {
+            return;
+        }
 
         const xScale = 100;
         const yScale = 100;

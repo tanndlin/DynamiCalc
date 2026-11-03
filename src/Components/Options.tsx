@@ -1,7 +1,15 @@
 import React from 'react';
 import Toggle from './Toggle';
+import type { Equation, VarMode, Vars } from '../types';
 
-const Options = (props) => {
+interface OptionsProps {
+    setEquations: (equations: Equation[]) => void;
+    setVars: (vars: Vars) => void;
+    varMode: VarMode;
+    setVarMode: (varMode: VarMode) => void;
+}
+
+const Options = (props: OptionsProps) => {
     const { setEquations, setVars, varMode } = props;
     return (
         <section className="flex flex-col gap-8 pb-8">

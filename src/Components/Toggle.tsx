@@ -1,13 +1,22 @@
 import React from 'react';
 
-const Toggle = (props) => {
+interface ToggleProps {
+    value: boolean;
+    setValue: (value: boolean) => void;
+    name: string;
+    optionNames?: { true: string; false: string };
+}
+
+const Toggle = (props: ToggleProps) => {
     const { value, setValue, name, optionNames } = props;
 
     return (
         <div className="flex flex-col">
             <label className="text-center text-xl font-bold mb-2">{name}</label>
             {optionNames && (
-                <h2 className="mx-auto mb-4">{optionNames[value]}</h2>
+                <h2 className="mx-auto mb-4">
+                    {optionNames[value ? 'true' : 'false']}
+                </h2>
             )}
             <div
                 className="mx-auto bg-secondary relative w-20 h-10 rounded-full border-2 border-tertiary"

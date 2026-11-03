@@ -5,18 +5,19 @@ import ToastProvider from './Components/ToastProvider';
 import Header from './Components/Header';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import GraphPage from './Pages/GraphPage';
+import type { Toast, ToastData } from './types';
 
 function App() {
-    const [toasts, setToasts] = React.useState([]);
+    const [toasts, setToasts] = React.useState<Toast[]>([]);
 
     const nextToastId = React.useRef(0);
-    const createToast = (toast) => {
+    const createToast = (toast: ToastData) => {
         const id = nextToastId.current++;
         setToasts((toasts) => [...toasts, { ...toast, id }]);
         return id;
     };
 
-    const removeToast = (id) => {
+    const removeToast = (id: number) => {
         setToasts((toasts) =>
             toasts.map((t) => (t.id === id ? { ...t, close: true } : t))
         );
@@ -28,10 +29,13 @@ function App() {
 
     window.onscroll = () => {
         const currentTop = window.pageYOffset;
-        const headerHeight = document.getElementById('header').offsetHeight;
-
+        const header = document.getElementById('header');
         const toastProvider = document.getElementById('toastProvider');
-        const top = Math.max(0, headerHeight - currentTop) + 10;
+        if (!header || !toastProvider) {
+            return;
+        }
+
+        const top = Math.max(0, header.offsetHeight - currentTop) + 10;
         toastProvider.style.top = `${top}px`;
     };
 
@@ -52,17 +56,7 @@ function App() {
                     }
                 />
 
-                <Route
-                    path="/graph"
-                    element={
-                        <GraphPage
-                            {...{
-                                createToast,
-                                removeToast
-                            }}
-                        />
-                    }
-                />
+                <Route path="/graph" element={<GraphPage />} />
             </Routes>
         </BrowserRouter>
     );

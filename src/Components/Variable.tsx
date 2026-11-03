@@ -1,11 +1,22 @@
 import React from 'react';
 import EditableText from './EditableText';
+import type { Result } from '../utils/Evaluate';
+import type { Variable as VariableData } from '../types';
 
-const Variable = (props) => {
+interface VariableProps {
+    name: string;
+    variable: VariableData;
+    isStatic: boolean;
+    evaluate: (input: string | number) => Result;
+    delete: () => void;
+    editVar: (value: VariableData) => void;
+}
+
+const Variable = (props: VariableProps) => {
     const { name, variable, isStatic, evaluate } = props;
-    const { value, description } = variable;
+    const { value, description = '' } = variable;
 
-    const editVar = (e) => {
+    const editVar = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newVar = variable;
         newVar.description = e.target.value;
         props.editVar(newVar);
