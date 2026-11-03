@@ -20,6 +20,9 @@ const NotebookPage = () => {
             </div>
             <footer className="notebook-legend" aria-label="Syntax">
                 <span>
+                    <code>Enter</code> adds a line
+                </span>
+                <span>
                     <code>=</code> recalculates wherever it’s used
                 </span>
                 <span>

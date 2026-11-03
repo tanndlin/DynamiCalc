@@ -75,6 +75,96 @@ class ResultWidget extends WidgetType {
     }
 }
 
+/** Puts the cursor on an empty last line, adding one if needed. */
+export const appendLine = (view: EditorView) => {
+    const end = view.state.doc.length;
+    const last = view.state.doc.lineAt(end);
+    view.dispatch({
+        changes: last.length > 0 ? { from: end, insert: '\n' } : undefined,
+        selection: { anchor: last.length > 0 ? end + 1 : end },
+        scrollIntoView: true
+    });
+    view.focus();
+};
+
+class AddLineWidget extends WidgetType {
+    eq() {
+        return true;
+    }
+
+    toDOM(view: EditorView) {
+        const el = document.createElement('div');
+        el.className = 'nb-add-line';
+        el.setAttribute('role', 'button');
+        el.innerHTML =
+            '<span class="nb-add-line__plus">+</span> New line <kbd>Enter</kbd>';
+        el.addEventListener('mousedown', (event) => {
+            event.preventDefault();
+            appendLine(view);
+        });
+        return el;
+    }
+}
+
+/** Removes the line at `pos`, along with its line break. */
+export const deleteLineAt = (view: EditorView, pos: number) => {
+    const { doc } = view.state;
+    const line = doc.lineAt(pos);
+    const from =
+        line.number < doc.lines ? line.from : Math.max(0, line.from - 1);
+    const to = line.number < doc.lines ? line.to + 1 : line.to;
+    view.dispatch({
+        changes: { from, to },
+        selection: { anchor: Math.min(from, doc.length - (to - from)) }
+    });
+    view.focus();
+};
+
+class DeleteLineWidget extends WidgetType {
+    eq() {
+        return true;
+    }
+
+    toDOM(view: EditorView) {
+        const el = document.createElement('span');
+        el.className = 'nb-delete-line';
+        el.setAttribute('role', 'button');
+        el.setAttribute('aria-label', 'Delete line');
+        el.title = 'Delete line (Ctrl+Shift+K)';
+        el.textContent = '×';
+        el.addEventListener('mousedown', (event) => {
+            event.preventDefault();
+            deleteLineAt(view, view.posAtDOM(el));
+        });
+        return el;
+    }
+}
+
+class HintWidget extends WidgetType {
+    eq() {
+        return true;
+    }
+
+    toDOM() {
+        const el = document.createElement('span');
+        el.className = 'nb-hint';
+        el.setAttribute('aria-hidden', 'true');
+        el.textContent = 'name = value';
+        return el;
+    }
+}
+
+const addLine = Decoration.widget({
+    widget: new AddLineWidget(),
+    block: true,
+    side: 1
+});
+const hint = Decoration.widget({ widget: new HintWidget(), side: 1 });
+const deleteButton = Decoration.widget({
+    widget: new DeleteLineWidget(),
+    side: -1
+});
+
 const TOKEN =
     /(#.*$)|(:=|=)|(\d[\d.]*(?:e[+-]?\d+)?%?)|([A-Za-z_][A-Za-z0-9_]*)/g;
 
@@ -107,6 +197,9 @@ const buildDecorations = (state: EditorState): DecorationSet => {
         if (result.error || result.display !== undefined) {
             classes.push('nb-has-result');
         }
+        if (i === active) {
+            classes.push('nb-active');
+        }
         const relation = related.get(i);
         if (relation) {
             classes.push(`nb-rel--${relation}`);
@@ -135,6 +228,13 @@ const buildDecorations = (state: EditorState): DecorationSet => {
             }
         }
 
+        if (state.doc.length > 0) {
+            ranges.push(deleteButton.range(line.from));
+        }
+        if (i === active && line.length === 0 && state.doc.length > 0) {
+            ranges.push(hint.range(line.from));
+        }
+
         let widget: ResultWidget | null = null;
         if (result.error) {
             widget = new ResultWidget(
@@ -149,6 +249,7 @@ const buildDecorations = (state: EditorState): DecorationSet => {
         }
     }
 
+    ranges.push(addLine.range(state.doc.length));
     return Decoration.set(ranges, true);
 };
 
@@ -163,6 +264,18 @@ export const notebookExtensions = (): Extension[] => [
     history(),
     keymap.of([...defaultKeymap, ...historyKeymap]),
     EditorView.lineWrapping,
+    // Clicking the empty sheet below the last line starts a new one
+    EditorView.domEventHandlers({
+        mousedown: (event, view) => {
+            const end = view.coordsAtPos(view.state.doc.length);
+            if (event.button !== 0 || !end || event.clientY <= end.bottom) {
+                return false;
+            }
+            event.preventDefault();
+            appendLine(view);
+            return true;
+        }
+    }),
     EditorView.contentAttributes.of({
         'aria-label': 'Notebook',
         spellcheck: 'false',

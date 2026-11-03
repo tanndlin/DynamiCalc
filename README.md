@@ -4,6 +4,8 @@ A calculation notebook where variables stay connected. In most calculators,
 setting a variable stores its value at that moment. In DynamiCalc, `=` stores
 the formula, so changing a value updates everything that uses it.
 
+![The notebook, with wires showing which lines B uses and which lines use B](docs/notebook.png)
+
 ## Writing a notebook
 
 Type one calculation per line. Each line's result appears on the right as you
@@ -33,6 +35,8 @@ Put the cursor on a line to see what it depends on. Wires in the margin connect
 it to the lines it uses (blue) and the lines that use it (amber).
 
 The **Graph** page plots functions of `x`.
+
+![Two functions plotted on the Graph page](docs/graph.png)
 
 ## Development
 

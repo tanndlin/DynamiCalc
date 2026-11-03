@@ -67,4 +67,47 @@ describe('NotebookPage', () => {
         await render();
         expect(editor().state.doc.toString()).toBe('A = 5\nB := 7');
     });
+
+    it('adds a new line from the button below the last line', async () => {
+        localStorage.setItem('notebook', 'a = 2');
+        await render();
+        const button = document.querySelector('.nb-add-line')!;
+
+        await act(async () => {
+            button.dispatchEvent(
+                new MouseEvent('mousedown', { bubbles: true })
+            );
+        });
+        expect(editor().state.doc.toString()).toBe('a = 2\n');
+        expect(editor().state.selection.main.head).toBe(6);
+        expect(document.querySelector('.nb-hint')).not.toBeNull();
+
+        // A second click reuses the empty line instead of stacking blanks
+        await act(async () => {
+            button.dispatchEvent(
+                new MouseEvent('mousedown', { bubbles: true })
+            );
+        });
+        expect(editor().state.doc.toString()).toBe('a = 2\n');
+    });
+
+    it('deletes a line from its delete button', async () => {
+        localStorage.setItem('notebook', 'a = 2\nb = 3\nc = 4');
+        await render();
+        const buttons = () => document.querySelectorAll('.nb-delete-line');
+
+        await act(async () => {
+            buttons()[1].dispatchEvent(
+                new MouseEvent('mousedown', { bubbles: true })
+            );
+        });
+        expect(editor().state.doc.toString()).toBe('a = 2\nc = 4');
+
+        await act(async () => {
+            buttons()[1].dispatchEvent(
+                new MouseEvent('mousedown', { bubbles: true })
+            );
+        });
+        expect(editor().state.doc.toString()).toBe('a = 2');
+    });
 });
