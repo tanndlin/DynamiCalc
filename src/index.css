@@ -1,17 +1,95 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+    --paper: #e9edf1;
+    --sheet: #f7f8fa;
+    --ink: #18202b;
+    --ink-soft: #5b6673;
+    --ink-faint: #97a1ad;
+    --rule: #dde2e8;
+    --uses: #2457d6;
+    --used-by: #b46a00;
+    --error: #b3261e;
+    --plot-1: #2457d6;
+    --plot-2: #b46a00;
+    --plot-3: #0e8a72;
+    --plot-4: #b3367a;
+    --plot-5: #6a4fd3;
+    --plot-6: #18202b;
+
+    --font-math:
+        'Martian Mono', ui-monospace, 'Cascadia Mono', Menlo, monospace;
+    --font-ui: 'Instrument Sans', system-ui, sans-serif;
+
+    --line-height: 2.5rem;
+    --gutter: 3.5rem;
+
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --paper: #0e1217;
+        --sheet: #141920;
+        --ink: #e3e8ee;
+        --ink-soft: #9aa5b2;
+        --ink-faint: #5d6774;
+        --rule: #222a34;
+        --uses: #77a2ff;
+        --used-by: #f0a63a;
+        --error: #ff7b72;
+        --plot-1: #77a2ff;
+        --plot-2: #f0a63a;
+        --plot-3: #3cc7a6;
+        --plot-4: #f07ab8;
+        --plot-5: #a897ff;
+        --plot-6: #e3e8ee;
+        color-scheme: dark;
+    }
+}
+
+:root[data-theme='dark'] {
+    --paper: #0e1217;
+    --sheet: #141920;
+    --ink: #e3e8ee;
+    --ink-soft: #9aa5b2;
+    --ink-faint: #5d6774;
+    --rule: #222a34;
+    --uses: #77a2ff;
+    --used-by: #f0a63a;
+    --error: #ff7b72;
+    --plot-1: #77a2ff;
+    --plot-2: #f0a63a;
+    --plot-3: #3cc7a6;
+    --plot-4: #f07ab8;
+    --plot-5: #a897ff;
+    --plot-6: #e3e8ee;
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+button,
+input {
+    font: inherit;
+}
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: var(--font-math);
+}
+
+:focus-visible {
+    outline: 2px solid var(--uses);
+    outline-offset: 2px;
 }

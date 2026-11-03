@@ -15,6 +15,7 @@ export default defineConfig(
     { ignores: ['build/', 'node_modules/'] },
     js.configs.recommended,
     react.configs.flat.recommended,
+    react.configs.flat['jsx-runtime'],
     prettierRecommended,
     {
         files: ['**/*.{js,jsx,cjs,ts,tsx}'],

@@ -1,0 +1,138 @@
+.graph-page {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    min-height: 0;
+}
+
+.graph-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-right: 1px solid var(--rule);
+}
+
+.fn-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fn-row {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.4rem 0.4rem 0.6rem;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+}
+
+.fn-row:focus-within {
+    border-color: var(--ink-faint);
+}
+
+.fn-swatch {
+    width: 0.9rem;
+    height: 0.9rem;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+}
+
+.fn-prefix {
+    font-family: var(--font-math);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+}
+
+.fn-input {
+    min-width: 0;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-math);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.35rem 0;
+}
+
+.fn-input:focus {
+    outline: none;
+}
+
+.fn-input::placeholder {
+    color: var(--ink-faint);
+    font-weight: 400;
+}
+
+.fn-remove {
+    width: 1.75rem;
+    height: 1.75rem;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ink-faint);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.fn-remove:hover {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.fn-error {
+    grid-column: 3 / -1;
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--error);
+}
+
+.fn-add {
+    align-self: flex-start;
+    border: 1px dashed var(--ink-faint);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+}
+
+.fn-add:hover {
+    color: var(--ink);
+    border-color: var(--ink-soft);
+}
+
+.graph-canvas {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.graph-canvas canvas {
+    position: absolute;
+    inset: 0;
+}
+
+@media (max-width: 48rem) {
+    .graph-page {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(22rem, 1fr);
+    }
+
+    .graph-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+        padding: 1rem;
+    }
+}

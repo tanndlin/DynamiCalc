@@ -1,0 +1,360 @@
+/* ---------- Shell ---------- */
+
+.app {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    height: 3.5rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+    font-family: var(--font-math);
+    font-size: 1.05rem;
+    font-weight: 750;
+    font-stretch: 112.5%;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.wordmark span {
+    font-weight: 300;
+    color: var(--ink-soft);
+}
+
+.site-header nav {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.site-header nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+}
+
+.site-header nav a:hover {
+    color: var(--ink);
+}
+
+.site-header nav a.active {
+    color: var(--ink);
+    border-bottom-color: var(--uses);
+}
+
+/* ---------- Notebook page ---------- */
+
+.notebook-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 0;
+}
+
+.notebook-sheet {
+    flex: 1;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+}
+
+.notebook-legend {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+}
+
+.notebook-legend code {
+    color: var(--ink);
+    font-weight: 600;
+    margin-right: 0.25rem;
+}
+
+.notebook-legend__wires {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.swatch {
+    display: inline-block;
+    width: 0.75rem;
+    height: 2px;
+    border-radius: 1px;
+}
+
+.swatch + .swatch,
+.notebook-legend__wires .swatch:nth-of-type(2) {
+    margin-left: 0.6rem;
+}
+
+.swatch--uses {
+    background: var(--uses);
+}
+
+.swatch--used-by {
+    background: var(--used-by);
+}
+
+/* ---------- Editor ---------- */
+
+.nb-editor {
+    --results-width: 34%;
+    height: 100%;
+}
+
+.nb-editor .cm-editor {
+    height: 100%;
+    background: transparent;
+    color: var(--ink);
+}
+
+.nb-editor .cm-editor.cm-focused {
+    outline: none;
+}
+
+.nb-editor .cm-scroller {
+    font-family: var(--font-math);
+    font-size: 0.9rem;
+    line-height: var(--line-height);
+    padding: 0.5rem 0 4rem;
+}
+
+.nb-editor .cm-content {
+    padding: 0;
+    caret-color: var(--uses);
+}
+
+.nb-editor .cm-cursor {
+    border-left: 2px solid var(--uses);
+}
+
+.nb-editor .cm-selectionBackground,
+.nb-editor .cm-focused .cm-selectionBackground {
+    background: color-mix(in srgb, var(--uses) 22%, transparent) !important;
+}
+
+.nb-editor .cm-line {
+    position: relative;
+    padding: 0 calc(var(--results-width) + 1rem) 0 var(--gutter);
+    border-bottom: 1px solid var(--rule);
+    transition: background-color 120ms ease;
+}
+
+.nb-editor .cm-placeholder {
+    color: var(--ink-faint);
+}
+
+/* Tokens */
+
+.nb-tok-name {
+    font-weight: 650;
+}
+
+.nb-tok-number {
+    color: var(--ink);
+}
+
+.nb-tok-assign {
+    color: var(--ink-faint);
+    padding: 0 0.1em;
+}
+
+.nb-tok-word {
+    color: var(--ink-soft);
+}
+
+.nb-tok-comment {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+}
+
+.nb-line--comment {
+    border-bottom-color: transparent !important;
+}
+
+/* Results column */
+
+.nb-result {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    width: var(--results-width);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    pointer-events: auto;
+    user-select: text;
+}
+
+.nb-result::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    border-left: 1px solid var(--rule);
+}
+
+.nb-result--error {
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--error);
+}
+
+.nb-result--pending {
+    color: var(--ink-faint);
+    font-weight: 400;
+}
+
+/* Dependency highlighting */
+
+.nb-rel--source {
+    background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.nb-rel--uses {
+    background: color-mix(in srgb, var(--uses) 8%, transparent);
+}
+
+.nb-rel--uses .nb-result {
+    color: var(--uses);
+}
+
+.nb-rel--used-by {
+    background: color-mix(in srgb, var(--used-by) 10%, transparent);
+}
+
+.nb-rel--used-by .nb-result {
+    color: var(--used-by);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 40rem) {
+    :root {
+        --gutter: 2rem;
+        --line-height: 2.25rem;
+    }
+
+    .site-header {
+        padding: 0 1rem;
+    }
+
+    .notebook-page {
+        padding: 1rem 0 0;
+    }
+
+    .notebook-sheet {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .nb-editor .cm-line {
+        padding-right: 1rem;
+    }
+
+    .nb-editor .cm-line.nb-has-result {
+        padding-bottom: 1.4rem;
+    }
+
+    .nb-result {
+        top: auto;
+        bottom: 0.45rem;
+        width: calc(100% - var(--gutter) - 1rem);
+        line-height: 1.25rem;
+    }
+
+    .nb-result::before {
+        display: none;
+    }
+
+    .notebook-legend__wires {
+        margin-left: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nb-editor .cm-line {
+        transition: none;
+    }
+}
+
+/* ---------- Dependency wires ---------- */
+
+.nb-wires-layer {
+    pointer-events: none;
+}
+
+.nb-wires {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+}
+
+.nb-wire {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: nb-wire-draw 260ms ease-out forwards;
+}
+
+.nb-wire--uses {
+    stroke: var(--uses);
+}
+
+.nb-wire--used-by {
+    stroke: var(--used-by);
+    animation-delay: 120ms;
+}
+
+.nb-wire-node {
+    fill: var(--ink);
+}
+
+@keyframes nb-wire-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nb-wire {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+}

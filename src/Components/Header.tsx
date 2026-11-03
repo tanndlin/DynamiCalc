@@ -1,28 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 
 const Header = () => {
     return (
-        <header
-            id="header"
-            className="grid grid-cols-3 bg-tertiary text-white h-16 place-items-center"
-        >
-            <p></p>
-            <h1 className="text-center text-4xl font-bold m-auto">
-                DynamiCalc
-            </h1>
-            <ul className="flex gap-8 text-xl font-bold">
-                <li>
-                    <Link className="hover:text-slate-300" to="/">
-                        Home
-                    </Link>
-                </li>
-                <li>
-                    <Link className="hover:text-slate-300" to="/graph">
-                        Graphing
-                    </Link>
-                </li>
-            </ul>
+        <header className="site-header">
+            <NavLink to="/" className="wordmark" aria-label="DynamiCalc home">
+                Dynami<span>Calc</span>
+            </NavLink>
+            <nav aria-label="Main">
+                <NavLink to="/" end>
+                    Notebook
+                </NavLink>
+                <NavLink to="/graph">Graph</NavLink>
+            </nav>
         </header>
     );
 };
