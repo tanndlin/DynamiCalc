@@ -11,8 +11,8 @@ const VariableViewer = (props) => {
                 .sort()
                 .map((key) => (
                     <Variable
+                        key={key}
                         {...{
-                            key,
                             name: key,
                             variable: vars[key],
                             isStatic,

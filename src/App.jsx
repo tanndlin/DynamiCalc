@@ -3,7 +3,7 @@ import HomePage from './Pages/HomePage';
 import './App.scss';
 import ToastProvider from './Components/ToastProvider';
 import Header from './Components/Header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import GraphPage from './Pages/GraphPage';
 
 function App() {

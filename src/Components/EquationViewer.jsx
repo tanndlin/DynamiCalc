@@ -118,8 +118,8 @@ const EquationViewer = (props) => {
             >
                 {equations.map((equation, i) => (
                     <Equation
+                        key={i}
                         {...{
-                            key: i,
                             equation,
                             setEquationInputter,
                             delete: () => {
